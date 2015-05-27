@@ -1,0 +1,13 @@
+{% extends "student_homepage.html" %}
+
+{% block content %}
+	<h2>My Skills</h2>
+	<h3>Drag and drop up to ten skills</h3>
+	{% block subcontent %}
+		{% include "skills.html" with read=False %}
+	{% endblock %}
+	<div id="done">
+		<input id="skillSubmit" type="button" value="Save"/>
+		<p id="skillMsg"></p>
+	</div>
+{% endblock %}

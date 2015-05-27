@@ -1,0 +1,12 @@
+{% extends "employer_homepage.html" %}
+
+{% block content %}
+<h2>Work Culture Survey</h2>
+<h3>Order Ideals by How Important They are to You</h3>
+<p>Place Most Important Ideals at Top</p>
+{% include "survey.html" with read=False %}
+<div id="done">
+	<input id="surveySubmit" type="button" value="Save"/>
+	<p id="surveyMsg"></p>
+</div>
+{% endblock %}

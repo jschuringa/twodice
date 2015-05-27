@@ -1,0 +1,66 @@
+{% extends "student_homepage.html" %}
+
+{% block content %}
+<div id="search">
+	<h2>Search for Internships</h2>
+	<table style = "padding-left:20px;">
+	<form id="job_search" name="job_search" action="/internmatch/student/search_results/">
+		<tr>
+		<td><label for="keywords">Keywords:</label>
+		<td colspan = 2><input type="text" name="keywords" id="keywords" value=""/>
+		</tr>
+		<tr>
+		<td><label for="employer">Company name:</label>
+		<td colspan=2><input type="text" name="employer" id="employer" value=""/>
+		</tr>
+		<tr>
+		<div class="disabled_all">
+			<td><label for="radius">Within:</label>
+			<select name="radius" id="employer" value="" class="disabled_all">
+				<option value="10" selected>10 miles of</option>
+				<option value="20">20 miles of</option>
+				<option value="30">30 miles of</option>
+			</select>
+			<td><label for="zip">5-digit zip code:</label>
+			<input type="number" name="zip" id="zip" value="" class="disabled" disabled/>
+			<td><input type="checkbox" name="home_zip" id="home_zip" value="home_zip" class="disable" checked/>
+			<label for="home_zip">Use my profile zipcode</label>
+		</div>
+	</tr>
+	<tr>
+		<td><input type="checkbox" name="national" id="national" value="national" class="disable_all"/>
+		<label for="national">Search nation-wide</label>
+		</tr>
+		<tr>
+		<td><label for="date_start">Internship start date range from:</label>
+		<td><input type="date" name="date_start" id="date_start" value=""/>
+		<label for="date_end">to:</label>
+		<input type="date" name="date_end" id="date_end" value=""/>
+		</tr>
+		<tr>
+			<hr>
+		<td><input type="radio" name="paid" id="paid" value="paid"/>
+		<label for="paid">Paid</label>
+		<td><input type="radio" name="paid" id="unpaid" value="unpaid"/>
+		<label for="unpaid">Unpaid</label>
+		<td><input type="radio" name="paid" id="nopref_pay" value="nopref" checked/>
+		<label for="unpaid">No preference</label>
+		<tr>
+		<td><input type="radio" name="fulltime" id="fulltime" value="fulltime" checked/>
+		<label for="paid">Full-time</label>
+		<td><input type="radio" name="fulltime" id="parttime" value="parttime"/>
+		<label for="unpaid">Part-time</label>
+		<td><input type="radio" name="fulltime" id="nopref_time" value="nopref" checked/>
+		<label for="unpaid">No preference</label>
+	</tr>
+	<tr>
+		<td colspan = 3><input type="checkbox" name="longterm" id="longterm" value="longterm"/>
+		<label for="longterm">Limit to internships with long-term employment opportunities</label>
+	</tr>
+	<tr>
+		<td><input type="submit" name="submit" id="submit_search" value="Search for Internships"/>
+	</tr>
+	</form>
+</table>
+</div>
+{% endblock %}

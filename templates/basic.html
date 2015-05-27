@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Two Dice{% endblock %}</title>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" >
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="{% static 'js/scripts.js' %}"></script>
+	{% block moreFEStuff %}{% endblock %}
+</head>
+
+<body>
+	<div id="page">
+	
+	<div id="header">
+		{% block header %}<h1>Two Dice</h1>{% endblock %}
+	</div>
+	
+	<div id="frame" class="flex">
+	    <div id="sidebar">
+	        {% block sidebar %}
+	        <ul>
+	            
+	            <li><a href="/admin/">Admin</a></li>
+	        </ul>
+	        {% endblock %}
+	    </div>
+	
+	    <div id="content">
+	    
+		{% if messages %}
+		<ul class="messages">
+		    {% for message in messages %}
+		    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    {% endfor %}
+		</ul>
+		{% endif %}
+	        
+	        {% block content %}This is the content area{% endblock %}
+		</div>
+	</div>
+	
+	<div id="footer">
+		{% block footer%}&#xa9; Two Dice, 2015{% endblock %}
+	</div>	
+</body>
+</html>

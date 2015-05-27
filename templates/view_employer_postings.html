@@ -1,0 +1,9 @@
+{% extends "student_homepage.html" %}
+
+{% block content %}
+<div id="view_employer_postings">
+	<h2>{{employer.name}}</h2>
+	<h3>Work Culture Match: {{employer.survey_match}}%</h3> 
+	{% include "results.html" %}
+</div>
+{% endblock %}
