@@ -1,0 +1,38 @@
+{% block content %}
+	<div id="contact_info">
+		<h2>{% if kind == "student" %}{{account.fname}} {{account.lname}}{% else %}{{account.name}}{%endif%}</h2>
+		<h3><a href="mailto:{{ account.email }}">{{ account.email }}</a></h3>
+		<p>{{account.city}}, {{account.state}}</p>
+		<div class="flex">
+			<div id="work">
+				<h3>Work Culture Views:</h3>
+				{% include "survey.html" with attitudes=account.survey read=True %}
+				{% if not me %}
+					<h4>{{account.survey_match}}% Match</h4>
+				{%endif%}
+			</div>
+			{% if kind == "student" %}
+				<div>
+					<h3>Skills:</h3>
+					{% include "skills.html" with skills=account.skills read=True %}
+					{% if not me %}
+						<h4>{{account.skills_match}}% Match</h4>
+					{%endif%}
+				</div>
+				</div>
+				{% if not me %}
+					<input type="button" id="resume" value="View Resume"/>
+					<input type="button" id="cl" value="View Cover Letter"/>
+				{%endif%}
+			{% else %}
+				</div>
+				{% if not me %}
+					<a href="/internmatch/student/view_employer_postings/{{account.employer}}"><input type="button" id="internships" value="View Internships"/></a>
+				{%endif%}
+			{%endif%}
+		{% if not me %}
+			<input type="button" id="contact" value="Contact"/>
+			<input type="button" id="dismiss" value="Dismiss"/>
+		{%endif%}
+	</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% block content %}
+<table>
+	<div id="contact_info">
+		<h2>Enter Your Contact Info</h2>
+		<form action="/internmatch/{{ type }}/contact_info/" method="post">{% csrf_token %}
+			{% if type == "student" %}
+		    <tr>
+		    <td><label for="fname">First Name:</label>
+		    <td><input type="text" name="fname" value="{{fname}}" id="fname">
+		    </tr>
+		    <tr>
+		    <td><label for="lname">Last Name:</label>
+		    <td><input type="text" name="lname" value="{{lname}}" id="lname">
+		    </tr>
+		    {% else %}
+		    <tr>
+		    <td><label for="name">Business Name:</label>
+		    <td><input type="text" name="name" value="{{name}}" id="name">
+		    </tr>
+		    {% endif %}
+		    <tr>
+		    <td><label for="email">Email:</label>
+		    <td><input type="email" name="email" value="{{email}}" id="email">
+		    </tr>
+		    <tr>
+		    <td><label for="addr1">Address:</label>
+		    <td><input type="text" name="addr1" value="{{addr1}}" id="addr1">
+		    </tr>
+		    <tr>
+			<td><label for="city">City:</label>
+		    <td><input type="text" name="city" value="{{city}}" id="city">
+		    </tr>
+		    <tr>
+		    <td><label for="state">State:</label>
+		    <td><input type="text" name="state" value="{{state}}" id="state">
+		    </tr>
+		    <tr>
+		    <td><label for="zip">5-Digit Zip Code:</label>
+		    <td><input type="number" name="zip" value="{{zip}}" id="zip">
+		    <tr>
+		    <td><input type="submit" value="Save" />
+			</tr>
+		</form>
+	</div>
+</table>
+{% endblock %}

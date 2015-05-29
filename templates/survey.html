@@ -1,0 +1,14 @@
+
+{% block content %}
+
+<div id="survey">
+	<div id="attitudeList">
+		<ul id="surveyList" class="{% if read %}locked{% else %}sortable{% endif %}">
+		    {% for attitude in attitudes %}
+		    <li id="{{ forloop.counter }}">{{ attitude }}</li>
+		    {% endfor %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

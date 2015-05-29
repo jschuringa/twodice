@@ -1,0 +1,20 @@
+{% extends "basic.html" %}
+
+{% block sidebar %}
+
+<p><a href="/internmatch/student/homepage/">Home</a></p>
+<p><a href="/internmatch/student/survey/">Take Work Culture Survey</a></p>
+<p><a href="/internmatch/student/skills/">Manage Skills</a></p>
+<p><a href="/internmatch/student/contact_info/">Manage Profile</a></p>
+<p><a href="/internmatch/student/intern_search/">Search for Internships</a></p>
+<p><a href="/internmatch/student/favorites/">View Saved Internships</a></p>
+<p><a href="/internmatch/student/doc_upload/">Upload Documents</a></p>
+<p><a href="/internmatch/student/add_ref/">Add References</a></p>
+<p><a href="/internmatch/student/view_ref/">View References</a></p>
+<p><a href="/internmatch/log_out/">Log Out</a></p>
+
+{% endblock %}
+
+{% block content %}
+{% include "view_profile.html" with kind="student" me=True %}
+{% endblock %}

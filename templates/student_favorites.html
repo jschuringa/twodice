@@ -1,0 +1,9 @@
+{% extends "student_homepage.html" %}
+
+{% block content %}
+<div id="student_favorites">
+	<h2>Saved Internships</h2>
+	<p>Internships will be automatically removed when they reach their start date or are removed by the company</p> 
+	{% include "results.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "student_homepage.html" %}
+
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<h2>Add a Reference</h2>	
+<table>
+<form action="/internmatch/student/get_ref/" method="post">
+	{% csrf_token %}
+	<input type="hidden" name="csrfmiddlewaretoken" value="pHK2CZzBB323BM2Nq7DE2sxnQoBG1jPl" disabled="">
+	<tr>
+	<td><label for="fname">First Name:</label>
+	<td><input type="text" name="fname" value="" id="fname">
+	</tr>
+	<tr>
+	<td><label for="lname">Last Name:</label>
+	<td><input type="text" name="lname" value="" id="lname">
+	</tr>
+	<tr>
+	<td><label for="email">Email:</label>
+	<td><input type="email" name="email" value="" id="email">
+	</tr>
+	<tr>
+	<td><input type="submit" value="Request Reference" />
+    </tr>
+</form>
+</table>
+
+
+
+
+{% endblock %}

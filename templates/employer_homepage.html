@@ -1,0 +1,18 @@
+{% extends "basic.html" %}
+
+{% block sidebar %}
+
+<p><a href="/internmatch/employer/homepage/">Home</a></p>
+<p><a href="/internmatch/employer/survey/">Take Work Culture Survey</a></p>
+<p><a href="/internmatch/employer/contact_info/">Manage Profile</a></p>
+<p><a href="/internmatch/employer/view_postings/">View Internship Postings</a></p>
+<p><a href="/internmatch/employer/create_job/">Create New Internship Posting</a></p>
+
+
+<p><a href="/internmatch/log_out/">Log Out</a></p>
+
+{% endblock %}
+
+{% block content %}
+	{% include "view_profile.html" with kind="employer" me=True %}
+{% endblock %}

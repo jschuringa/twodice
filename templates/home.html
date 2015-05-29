@@ -1,0 +1,61 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<h2> Welcome to Internmatch</h2>
+
+{% if form.errors %}
+  <p class="error">Sorry, that's not a valid username or password</p>
+{% endif %}
+<table>
+<form action="/internmatch/auth/" method="post">{% csrf_token %}
+	<tr><td><h3>Log in</h3></td></tr>
+	<tr>
+		<td><label for="username">User name:</label>
+	<td><input type="text" name="username" value="" id="username"/>
+	</tr>
+	<tr>
+	<td><label for="password">Password:</label>
+	<td><input type="password" name="password" value="" id="password"/>
+	</tr>
+	<tr>
+	<td><input type="submit" value="Login" />
+</tr>
+</form>
+ </table>
+ <div id="signUp" class="flex"> 
+	<div id="newStudent">
+		<h3>Create New Student Account</h3>
+		
+		{% for field in formS %}
+		  {{field.error}}
+		
+		{% endfor %}
+		
+		<form action="/" id="formS" method="post">{% csrf_token %}
+		{{formS}}
+		
+		
+		<input type="submit" name="student" value="Register" />
+		  
+		</form>
+	</div>
+	<div id="newEmployer">
+		<h3>Create New Business Account</h3>
+		
+		{% for field in formE %}
+		  {{field.error}}
+		
+		{% endfor %}
+		
+		<form action="/" id="FormE" method="post">{% csrf_token %}
+		{{formE}}
+		
+		
+		
+		<input type="submit" name="employer" value="Register" />
+		  
+		</form>
+	</div>
+</div>
+{% endblock %}

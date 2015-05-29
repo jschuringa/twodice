@@ -1,0 +1,51 @@
+{% extends "student_homepage.html" %}
+
+{% block content %}
+<div id="apply">
+	<h2>Apply for {{job.title}} | Work Culture Match: {{job.survey_match}}% | Skill Match: {{job.skills_match}}%</h2>
+	<a href="/internmatch/student/view_employer/"><h3>{{job.employer}}</h3></a>
+	<p>{{job.city}}, {{job.state}} {{job.zip}}</p>
+	<p>Start date: {{job.date}}</p>
+	<p>{% if job.paid %}Paid{% else %}Unpaid{% endif %} | {% if job.fulltime %}Full-time{%else%}Part-time{%endif%}{% if job.longterm %} | Long-term opportunity{% endif %}</p>
+	<form id="apply_form">
+		<div class="flex">
+		<fieldset>
+			<label for="resume_list">Select resume:</label>
+			<select id="resume_list" name="resume_list" value="">
+				{% for resume in student.resumes %}
+					<option value="{{resume.resume}}"{% if forloop.first %}selected{%endif%}>{{resume}}</option>
+				{% endfor %}
+			</select>
+			<br/>
+			<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+			
+			<div>
+				<label for="fileselect">Or upload a new one:</label>
+				<input type="file" class="fileselect" name="resumeselect[]" multiple="multiple" />
+				<div class="filedrag">drop resume here</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<label for="cl_list">Select cover letter:</label>
+			<select id="cl_list" name="cl_list" value="">
+				{% for cl in student.cover_letters %}
+					<option value="{{cl.cover_letter}}"{% if forloop.first %}selected{%endif%}>{{cl}}</option>
+				{% endfor %}
+			</select>
+			<br/>
+			<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+			
+			<div>
+				<label for="fileselect">Or upload a new one:</label>
+				<input type="file" class="fileselect" name="clselect[]" multiple="multiple" />
+				<div class="filedrag">drop cover letter here</div>
+			</div>
+		</fieldset>
+		</div>
+		<div id="submitbutton">
+			<input id="button_apply" type="submit" value="Apply"/>
+			<input id="cancel" type="submit" value="Cancel"/>
+		</div>
+	</form>
+</div>
+{% endblock %}

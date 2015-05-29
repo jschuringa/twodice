@@ -1,0 +1,77 @@
+.flex{
+	display:flex;
+}
+#newStudent{
+	margin-right:10px;
+}
+#sidebar{
+	flex-shrink:0;
+	border: solid 1px;
+	padding: 5px;
+}
+#content{
+	padding: 5px;
+}
+#footer{
+	clear:left;
+}
+#skills_locked, #skills_draggable{
+	display:flex;
+	padding:0px;
+}
+.draggable, .sortable{
+	border: solid 1px;
+    min-height: 100px;
+    min-width: 250px;
+    list-style-type: none;
+    padding:10px;
+    margin:5px;
+}
+.draggable li, .sortable li{
+	cursor: -webkit-grab;
+	border: solid 1px;
+	padding: 2px;
+	background-color:#ffffff;
+}
+.draggable li:active, .sortable li:active{
+	cursor: -webkit-grabbing;	
+}
+#skillSubmit{
+	margin-top: 50px;
+}
+.filedrag{
+	border: solid 1px;
+	padding-top:100px;
+	padding-bottom:100px;
+	width:200px;
+	text-align:center;
+}
+#job_form p{
+	margin:0px;
+}
+#work{
+	margin-right:10px;
+}
+.result{
+	margin:5px;
+	border:solid 1px;
+}
+.result a:link, .result a:visited{
+	text-decoration:none;
+}
+.result a:hover, .result a:active{
+	text-decoration:underline;
+}
+.result h3, .result h4, .result p{
+	margin:0px;
+	padding-left:5px;
+}
+/* firefox specific code */
+@-moz-document url-prefix() {
+	.draggable li, .sortable li{
+		cursor: -moz-grab;
+	}
+	.draggable li:active, .sortable li:active{
+		cursor: -moz-grabbing;	
+	}
+}

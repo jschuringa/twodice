@@ -1,0 +1,57 @@
+{% extends "employer_homepage.html" %}
+{% block content %}
+<div id="view_applicants">
+	<div id="results">
+		<div class="pagination">
+		    <span class="step-links">
+		    		<a href="/internmatch/employer/view_postings/">Back to postings</a> | 
+		        {% if results.has_previous %}
+		            <a href="?page={{ results.previous_page_number }}">previous</a>
+		        {% endif %}
+		
+		        <span class="current">
+		            Page {{ results.number }} of {{ results.paginator.num_pages }}
+		        </span>
+		
+		        {% if results.has_next %}
+		            <a href="?page={{ results.next_page_number }}">next</a>
+		        {% endif %}
+		    </span>
+		</div>
+		{% for result in results %}
+			<div class="result">
+				<a href="/internmatch/employer/view_student/">
+					<h3>{{result.fname}} {{result.lname}}</h3>
+					<p>{{result.city}}, {{result.state}}</p>
+					<h4>Work Culture Match: {{result.survey_match}}% | Skill Match: {{result.skills_match}}</h4>
+				</a>
+				{% if type != "search" %}<input type="button" class="delete" value="Delete"/>{% endif %}
+				{% if results.applicants %}<input type="button" class="view" value="View Applicants"/>{% endif %}
+			</div>
+		{% empty %}
+			{% if type == "search" %}
+				<h3>Sorry, no relevant internships found. Please change criteria or try again later.</h3>
+			{% else %}
+				<h3>You don't have any active saved internships. Maybe they expired.</h3>
+			{% endif %}
+		{% endfor %}
+		<div class="pagination">
+		    <span class="step-links">
+		    		<a href="/internmatch/employer/view_postings/">Back to postings</a> | 
+		        
+		        {% if results.has_previous %}
+		            <a href="?page={{ results.previous_page_number }}">previous</a>
+		        {% endif %}
+		
+		        <span class="current">
+		            Page {{ results.number }} of {{ results.paginator.num_pages }}
+		        </span>
+		
+		        {% if results.has_next %}
+		            <a href="?page={{ results.next_page_number }}">next</a>
+		        {% endif %}
+		    </span>
+		</div>
+	</div>
+</div>
+{% endblock %}
