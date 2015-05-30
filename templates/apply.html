@@ -3,7 +3,7 @@
 {% block content %}
 <div id="apply">
 	<h2>Apply for {{job.title}} | Work Culture Match: {{job.survey_match}}% | Skill Match: {{job.skills_match}}%</h2>
-	<a href="/internmatch/student/view_employer/"><h3>{{job.employer}}</h3></a>
+	<a href="/internmatch/student/view_employer/{{job.EmpUsername}}"><h3>{{job.employer}}</h3></a>
 	<p>{{job.city}}, {{job.state}} {{job.zip}}</p>
 	<p>Start date: {{job.date}}</p>
 	<p>{% if job.paid %}Paid{% else %}Unpaid{% endif %} | {% if job.fulltime %}Full-time{%else%}Part-time{%endif%}{% if job.longterm %} | Long-term opportunity{% endif %}</p>
@@ -21,8 +21,7 @@
 			
 			<div>
 				<label for="fileselect">Or upload a new one:</label>
-				<input type="file" class="fileselect" name="resumeselect[]" multiple="multiple" />
-				<div class="filedrag">drop resume here</div>
+				<input type="file" class="fileselect" name="resume" />
 			</div>
 		</fieldset>
 		<fieldset>
@@ -37,8 +36,7 @@
 			
 			<div>
 				<label for="fileselect">Or upload a new one:</label>
-				<input type="file" class="fileselect" name="clselect[]" multiple="multiple" />
-				<div class="filedrag">drop cover letter here</div>
+				<input type="file" class="fileselect" name="cl" />
 			</div>
 		</fieldset>
 		</div>

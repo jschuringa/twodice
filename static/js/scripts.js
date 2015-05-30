@@ -174,4 +174,33 @@ $(document).ready(function(){
 		}
 	});
 });
+
+if(window.FileReader) { 
+	  addEventHandler(window, 'load', function() {
+	    var drop = $('.filedrag');
+	  	
+	    function cancel(e) {
+	      if (e.preventDefault) { e.preventDefault(); }
+	      return false;
+	    }
+	  
+	    // Tells the browser that we *can* drop on this target
+	    addEventHandler(drop, 'dragover', cancel);
+	    addEventHandler(drop, 'dragenter', cancel);
+	  });
+	} else { 
+	  document.getElementById('.filedrag').innerHTML = 'Your browser does not support the HTML5 FileReader.';
+	}
+function addEventHandler(obj, evt, handler) {
+    if(obj.addEventListener) {
+        // W3C method
+        obj.addEventListener(evt, handler, false);
+    } else if(obj.attachEvent) {
+        // IE method.
+        obj.attachEvent('on'+evt, handler);
+    } else {
+        // Old school method.
+        obj['on'+evt] = handler;
+    }
+}
 });

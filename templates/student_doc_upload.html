@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<form id="upload" action="/internmatch/student/doc_upload" method="POST" enctype="multipart/form-data">
-
+<form id="upload" action="/internmatch/student/doc_upload/" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
 <fieldset>
 <legend>Upload Resume and Cover Letter:</legend>
 <div class="flex">
@@ -11,16 +11,16 @@
 	
 	<div>
 		<label for="fileselect">Resume to upload:</label>
-		<input type="file" class="fileselect" name="resumeselect[]" multiple="multiple" />
-		<div class="filedrag">or drop resume here</div>
+		<input type="file" class="fileselect" name="resume" />
+		<!-- <div class="filedrag">or drop resume here</div> -->
 	</div>
 	
 	<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
 	
 	<div>
 		<label for="fileselect">Cover letter to upload:</label>
-		<input type="file" class="fileselect" name="clselect[]" multiple="multiple" />
-		<div class="filedrag">or drop cover letter here</div>
+		<input type="file" class="fileselect" name="cl" />
+		<!--  <div class="filedrag">or drop cover letter here</div> -->
 	</div>
 </div>
 <div id="submitbutton">

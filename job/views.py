@@ -21,6 +21,15 @@ def apply(request, username):
     #for demo 05/27
     student = {"resumes":["resume1.doc", "resume2.doc", "resume3.doc"], "cover_letters":["generic_cover.doc", "cl_techco.doc", "cl_webcorp.doc"]}
     #end demo
+    student = {}
+    student["resumes"] = []
+    student["cover_letters"] = []
+    res = models.StudentDocMain.objects.filter(Username=request.user.get_username(), Type="resume")
+    cls = models.StudentDocMain.objects.filter(Username=request.user.get_username(), Type="cl")
+    for r in res:
+        student["resumes"].append(r.Doc)
+    for c in cls:
+        student["cover_letters"].append(c.Doc)
     job = get_job(models.EmpDocMain.objects.get(Username=username))
     return render_to_response("apply.html", {"job":job, "student":student})
 
