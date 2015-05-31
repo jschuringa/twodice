@@ -16,22 +16,50 @@ from django.forms.models import model_to_dict
 import requests
 from django.db.models import Q
 from database.models import EmployerMain
+from upload.views import do_upload
 
-def apply(request, username):
-    #for demo 05/27
-    student = {"resumes":["resume1.doc", "resume2.doc", "resume3.doc"], "cover_letters":["generic_cover.doc", "cl_techco.doc", "cl_webcorp.doc"]}
-    #end demo
+def apply(request, jobname):
+    x = {}
+    x.update(csrf(request))
+    username = request.user.get_username()
+    if request.method == "POST":
+        res = ''
+        cl = ''
+        if request.FILES.get("resume"):
+            filer = request.FILES['resume']
+            res = filer.name
+            res = do_upload(filer, "resume", username)
+        elif request.POST.get("resume_list"):
+            res = request.POST.get("resume_list")           
+        if request.FILES.get("cl"):
+            filec = request.FILES['cl']
+            cl = filec.name
+            cl = do_upload(filec, "cover_letter", username)
+        elif request.POST.get("cl_list"):
+            cl = request.POST.get("cl_list")   
+        a = models.ApplicationMain(StudUsername=request.user.get_username(), JobUsername=jobname, 
+                               Resume=res, CoverLetter=cl, pub_date=date.today())
+        a.save()
+        if not models.StudFavoritesMain.objects.filter(StudUsername=username, JobUsername=jobname):
+            f = models.StudFavoritesMain(StudUsername=username, JobUsername=jobname, Applied=True, pub_date=date.today())
+        else:
+            f = models.StudFavoritesMain.objects.get(StudUsername=username, JobUsername=jobname)
+            f.Applied = True
+        f.save()
+        return HttpResponseRedirect("/internmatch/student/favorites", x)
     student = {}
     student["resumes"] = []
     student["cover_letters"] = []
-    res = models.StudentDocMain.objects.filter(Username=request.user.get_username(), Type="resume")
-    cls = models.StudentDocMain.objects.filter(Username=request.user.get_username(), Type="cl")
+    res = models.StudentDocMain.objects.filter(Username=username, Type="resume")
+    cls = models.StudentDocMain.objects.filter(Username=username, Type="cl")
     for r in res:
         student["resumes"].append(r.Doc)
     for c in cls:
         student["cover_letters"].append(c.Doc)
-    job = get_job(models.EmpDocMain.objects.get(Username=username))
-    return render_to_response("apply.html", {"job":job, "student":student})
+    job = get_job(models.EmpDocMain.objects.get(Username=jobname))
+    x["job"] = job
+    x["student"] = student
+    return render_to_response("apply.html", x)
 
 def save(request, username):
     if not models.StudFavoritesMain.objects.filter(StudUsername=request.user.get_username(), JobUsername=username):
@@ -141,6 +169,8 @@ def view(request, name):
     x['employer'] = e.Company
     if models.StudFavoritesMain.objects.filter(StudUsername=request.user.get_username(), JobUsername=name):
         x['saved']=True
+    if models.ApplicationMain.objects.filter(JobUsername=name, StudUsername=request.user.get_username()):
+        x["applied"] = True
     return render_to_response("view_job.html", x)
 
 def search(request):
@@ -213,6 +243,12 @@ def results(request, kind):
     else:
         jobs = models.EmpDocMain.objects.all()
     results = get_job_list(jobs)
+    if kind == "favorites":
+        for r in results:
+            if models.StudFavoritesMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
+                r["favorite"] = True
+            if models.ApplicationMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
+                r["applied"] = True
     paginator = Paginator(results, 10)
     page = request.GET.get('page')
     try:
@@ -267,6 +303,7 @@ def get_job_list(jobs):
 
 def get_job(job):
     temp = {}
+    temp["Username"] = job.Username
     temp["title"]= job.Title
     e = models.EmployerMain.objects.get(Username=job.EmpUsername)
     temp["employer"] = e.Company

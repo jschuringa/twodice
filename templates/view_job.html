@@ -23,7 +23,11 @@
 		<h3>Description</h3>
 		<p>{{job.Description}}</p>
 		<a href="/internmatch/student/view_employer/{{job.EmpUsername}}"><input type="button" id="employer" value="View Employer Profile"/></a>
-		<a href="/internmatch/student/apply/{{job.Username}}"><input type="button" id="apply" value="Apply for Internship"/></a>
+		{% if applied %}
+			Already Applied
+		{% else %}
+			<a href="/internmatch/student/apply/{{job.Username}}"><input type="button" id="apply" value="Apply for Internship"/></a>
+		{% endif %}
 		{% if saved %}
 			<a href="/internmatch/student/delete/{{job.Username}}"><input type="button" id="delete" value="Remove Internship"/></a>
 		{% else %}

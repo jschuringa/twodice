@@ -19,20 +19,26 @@
 						<h4>{{account.skills_match}}% Match</h4>
 					{%endif%}
 				</div>
-				</div>
+			</div>
 				{% if not me %}
-					<input type="button" id="resume" value="View Resume"/>
-					<input type="button" id="cl" value="View Cover Letter"/>
+					{% if resume %}
+						<a href="/internmatch/download/{{account.student}}/{{resume}}/"><input type="button" id="resume" value="View Resume"/></a>
+					{% endif %} 
+					{% if cl %}
+						<a href="/internmatch/download/{{account.student}}/{{cl}}/"><input type="button" id="cl" value="View Cover Letter"/></a>
+					{% endif %}
 				{%endif%}
 			{% else %}
 				</div>
 				{% if not me %}
-					<a href="/internmatch/student/view_employer_postings/{{account.employer}}"><input type="button" id="internships" value="View Internships"/></a>
+					<a href="/internmatch/student/view_employer_postings/{{account.employer}}/"><input type="button" id="internships" value="View Internships"/></a>
 				{%endif%}
 			{%endif%}
 		{% if not me %}
-			<input type="button" id="contact" value="Contact"/>
-			<input type="button" id="dismiss" value="Dismiss"/>
+			<a href="mailto:{{ account.email }}"><input type="button" id="contact" value="Contact"/></a>
+			{% if kind == "student" %}
+				<a href="/internmatch/employer/remove/{{account.student}}/{{job}}/"><input type="button" id="dismiss" value="Dismiss"/></a>
+			{%endif%}
 		{%endif%}
 	</div>
 {% endblock %}

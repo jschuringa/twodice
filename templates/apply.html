@@ -7,43 +7,50 @@
 	<p>{{job.city}}, {{job.state}} {{job.zip}}</p>
 	<p>Start date: {{job.date}}</p>
 	<p>{% if job.paid %}Paid{% else %}Unpaid{% endif %} | {% if job.fulltime %}Full-time{%else%}Part-time{%endif%}{% if job.longterm %} | Long-term opportunity{% endif %}</p>
-	<form id="apply_form">
+	<form id="apply_form" action="/internmatch/student/apply/{{job.Username}}/" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
 		<div class="flex">
-		<fieldset>
+		<div>
 			<label for="resume_list">Select resume:</label>
 			<select id="resume_list" name="resume_list" value="">
+				<option value=""></option>
 				{% for resume in student.resumes %}
-					<option value="{{resume.resume}}"{% if forloop.first %}selected{%endif%}>{{resume}}</option>
+					<option value="{{resume}}">{{resume}}</option>
 				{% endfor %}
 			</select>
 			<br/>
-			<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
-			
-			<div>
-				<label for="fileselect">Or upload a new one:</label>
-				<input type="file" class="fileselect" name="resume" />
-			</div>
-		</fieldset>
-		<fieldset>
+			<fieldset>
+				<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+				
+				<div>
+					<label for="resume">Or upload a new one:</label>
+					<input type="file" class="fileselect" name="resume" id="resume"/>
+				</div>
+			</fieldset>
+		</div>
+		<div>
 			<label for="cl_list">Select cover letter:</label>
 			<select id="cl_list" name="cl_list" value="">
+				<option value=""></option>
 				{% for cl in student.cover_letters %}
-					<option value="{{cl.cover_letter}}"{% if forloop.first %}selected{%endif%}>{{cl}}</option>
+					<option value="{{cl}}">{{cl}}</option>
 				{% endfor %}
 			</select>
 			<br/>
-			<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
-			
-			<div>
-				<label for="fileselect">Or upload a new one:</label>
-				<input type="file" class="fileselect" name="cl" />
+			<fieldset>
+				<input type="hidden" id="MAX_FILE_SIZECL" name="MAX_FILE_SIZE" value="300000" />
+				
+				<div>
+					<label for="cl">Or upload a new one:</label>
+					<input type="file" class="fileselect" name="cl" id="cl"/>
+				</div>
+			</fieldset>
 			</div>
-		</fieldset>
 		</div>
-		<div id="submitbutton">
-			<input id="button_apply" type="submit" value="Apply"/>
-			<input id="cancel" type="submit" value="Cancel"/>
-		</div>
+			<div id="submitbutton">
+				<input id="button_apply" type="submit" value="Apply"/>
+				<input id="cancel" type="submit" value="Cancel"/>
+			</div>
 	</form>
 </div>
 {% endblock %}

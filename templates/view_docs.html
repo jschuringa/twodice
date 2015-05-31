@@ -1,0 +1,26 @@
+{% extends "student_homepage.html" %}
+{% block content %}
+	<div id="view_docs">
+		<h2>View Documents</h2>
+		<h3>Resumes</h3>
+		<table>
+			{% for r in resumes %}
+				<tr><td>{{r.Doc}}</td>
+				<td><a href="/internmatch/download/{{r.Username}}/{{r.Doc}}/"><button value="Download">Download</button></a></td>
+				<td><a href="/internmatch/student/delete_doc/{{r.Username}}/{{r.Doc}}/"><button value="Delete">Delete</button></a></td>
+			{% empty %}
+				<th>You don't have any uploaded resumes</th>
+			{% endfor %}
+		</table>
+		<h3>Cover Letters</h3>
+		<table>
+			{% for c in cover_letters %}
+				<tr><td>{{c.Doc}}</td>
+				<td><a href="/internmatch/download/{{c.Username}}/{{c.Doc}}/"><button value="Download">Download</button></a></td>
+				<td><a href="/internmatch/student/delete_doc/{{c.Username}}/{{c.Doc}}/"><button value="Delete">Delete</button></a></td>
+			{% empty %}
+				<th>You don't have any uploaded cover letters</th>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

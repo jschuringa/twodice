@@ -27,8 +27,9 @@
 					<p>{% if result.paid %}Paid{% else %}Unpaid{% endif %} | {% if result.fulltime %}Full-time{%else%}Part-time{%endif%}{% if result.longterm %} | Long-term opportunity{% endif %}</p>
 					<p>{{result.description|truncatewords:50}}</p>
 				</a>
-				{% if type == "employer" or type == 'student' %}<a href="/internmatch/{{type}}/delete/{{result.name}}/"><input type="button" class="delete" value="Delete" id="{{result.name}}"/></a>{% endif %}
-				{% if result.applicants %}<a href="/internmatch/employer/view_applicants/"><input type="button" class="view" value="View Applicants"/></a>{% endif %}
+				{% if type == "employer" or type == 'student' %}<a href="/internmatch/{{type}}/delete/{{result.name}}/"><input type="button" class="delete" value="{%if type == 'student'%}Remove from list{%else%}Delete{%endif%}" id="{{result.name}}"/></a>{% endif %}
+				{% if result.applicants and type == "employer" %}<a href="/internmatch/employer/view_applicants/{{result.name}}"><input type="button" class="view" value="View Applicants"/></a>{% endif %}
+				{% if result.applied and type == "student" %}Already Applied{% elif type == "student" %}<a href="/internmatch/student/apply/{{result.name}}"><input type="button" class="apply" value="Apply"/></a>{% endif %}
 			</div>
 		{% empty %}
 			{% if type == "search" %}
