@@ -2,14 +2,16 @@
 
 {% block content %}
 
-<h2>Your 
+<h2>Your References</h2>	
 
-References</h2>	
-<form action="/internmatch/view_ref/" method="post">
-    
-</form>
-
-
-
+<div id="references">
+	<div id="reference_list">
+		<ul id="reference_list">
+		    {% for reference in references %}
+		    <li id="{{ forloop.counter }}">{{ reference }}</li>
+		    {% endfor %}
+		</ul>
+	</div>
+</div>
 
 {% endblock %}
