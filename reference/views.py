@@ -15,9 +15,11 @@ import ast
 from django.forms.models import model_to_dict
 
 
-def get_refs():
-	return {"Bob Johnson":"Assistant Director", "Hugh Jackman":"Software Engineer", 
-	"Bill Gates":"Microsoft", "Katy Perry":"Singer"}
+def get_refs(request):
+	x = {}
+	x.update(csrf(request))
+	refs = models.StudReferenceMain.objects.filter(Username=request.user.get_username())
+	return refs
 	
 def add_reference(request):
 	return render_to_response("student_ref.html")
@@ -31,12 +33,13 @@ def send_email(request):
 def view_references(request):
     x = {}
     x.update(csrf(request))
-    references = get_refs()
+    references = get_refs(request)
     first_time = False
     if not models.StudReferenceMain.objects.filter(Username=request.user.get_username()):
         first_time = True
     else:
-        s = models.StudReferenceMain.objects.get(Username=request.user.get_username())
+        #s = models.StudReferenceMain.objects.get(Username=request.user.get_username())
+    	pass
     if request.method == "POST":
         if first_time:
             s = models.StudReferenceMain(Username=request.user.get_username())
