@@ -1,6 +1,8 @@
 import smtplib
 
-def sendEmail(address, emailText):
+def sendEmail(address, emailText, subject):
+    m = text(emailText)
+    m['Subject'] = subject
     ourAddress = 'twodice395@gmail.com'
     password = 'capstone396'
     server = smtplib.SMTP('smtp.gmail.com:587')
