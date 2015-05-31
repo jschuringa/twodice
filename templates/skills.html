@@ -5,6 +5,12 @@
 		    {% for skill in skills %}
 		    <li id="{{ forloop.counter }}">{{ skill }}</li>
 		    {% endfor %}
+
+		    {%if skills == None%}
+		    	You have not finished your skills, please go to
+		    	<a href="/internmatch/student/skills/">Skills page</a>
+		    	to complete.
+		    {%endif%}
 		</ul>
 	</div>
 	{% if not read %}

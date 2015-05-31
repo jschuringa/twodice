@@ -1,6 +1,47 @@
 {% extends "basic.html" %}
 
 {% block sidebar %}
+ <div class="container">
+     <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+
+
+
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+           
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active" style="padding-left:40px;">
+              	<a href="/internmatch/student/homepage/">Home</a></li>
+              <li><a href="/internmatch/student/intern_search/">Search for Internships</a></li>
+              <li><a href="/internmatch/student/favorites/">View Saved Internships</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Manage <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="/internmatch/student/contact_info/">Manage Profile</a></li>
+              <li><a href="/internmatch/student/skills/">Manage Skills</a></li>
+                  
+                  <li class="divider"></li>
+       
+                  <li><a href="/internmatch/student/doc_upload/">Upload Documents</a></li>
+                  <li><a href="/internmatch/student/view_docs/">View Documents</a></li>
+                  <li><a href="/internmatch/student/add_ref/">Add References</a></li>
+                  <li><a href="/internmatch/student/view_ref/">View References</a></li>
+                </ul>
+              </li>
+              <li><a href="/internmatch/log_out/">Log Out</a></li>
+            </ul>
+
+
+<!---
+<a class="navbar-brand" href="#">TwoDice</a>
 
 <p><a href="/internmatch/student/homepage/">Home</a></p>
 <p><a href="/internmatch/student/survey/">Take Work Culture Survey</a></p>
@@ -13,9 +54,18 @@
 <p><a href="/internmatch/student/add_ref/">Add References</a></p>
 <p><a href="/internmatch/student/view_ref/">View References</a></p>
 <p><a href="/internmatch/log_out/">Log Out</a></p>
+---->
 
+</div>
+</div>
+
+		</div>
+	</div>
 {% endblock %}
 
 {% block content %}
 {% include "view_profile.html" with kind="student" me=True %}
 {% endblock %}
+
+
+

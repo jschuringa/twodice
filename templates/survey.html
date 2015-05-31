@@ -3,6 +3,11 @@
 
 <div id="survey">
 	<div id="attitudeList">
+		{%if attitudes == None%}
+			You have not finished your work culture, please go to
+			<a href="/internmatch/student/survey">Work Culture Survey</a> to complete. 
+
+		{%endif%}
 		<ul id="surveyList" class="{% if read %}locked{% else %}sortable{% endif %}">
 		    {% for attitude in attitudes %}
 		    <li id="{{ forloop.counter }}">{{ attitude }}</li>

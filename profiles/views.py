@@ -42,12 +42,18 @@ def get_profile_info(kind, username):
         account['student']= username
         account['fname'] = user.Fname
         account['lname'] = user.Lname
-        account['skills'] = skillList.get_user_skills(user.Username)
+        try:
+            account['skills'] = skillList.get_user_skills(user.Username)
+        except:
+            account['skills'] = None
     else:
         user = models.EmployerMain.objects.get(Username=username)
         account['name'] = user.Company
         account['employer'] = username
-    account['survey'] = surveyList.get_user_survey(user.Username)
+    try:
+        account['survey'] = surveyList.get_user_survey(user.Username)
+    except:
+        account['survey'] = None
     account['email'] = user.Email
     account['city'] = user.City
     account['state'] = user.State

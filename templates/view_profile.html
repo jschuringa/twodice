@@ -1,8 +1,20 @@
 {% block content %}
 	<div id="contact_info">
-		<h2>{% if kind == "student" %}{{account.fname}} {{account.lname}}{% else %}{{account.name}}{%endif%}</h2>
+		{% if account.city == '' or account.fname == '' or account.lname == '' or account.email == '' or account.city == '' or account.state == ''%}
+			Personal Information has not been finished. Please go to
+			<a href="/internmatch/student/contact_info/">Contact Info</a> to finish.
+		{%else%}
+		<h2>{% if kind == "student" %}
+				{{account.fname}} {{account.lname}}
+			{% else %}
+				{{account.name}}
+			{%endif%}</h2>
 		<h3><a href="mailto:{{ account.email }}">{{ account.email }}</a></h3>
+
+		
 		<p>{{account.city}}, {{account.state}}</p>
+		{%endif%}
+		
 		<div class="flex">
 			<div id="work">
 				<h3>Work Culture Views:</h3>
@@ -15,6 +27,7 @@
 				<div>
 					<h3>Skills:</h3>
 					{% include "skills.html" with skills=account.skills read=True %}
+	
 					{% if not me %}
 						<h4>{{account.skills_match}}% Match</h4>
 					{%endif%}
