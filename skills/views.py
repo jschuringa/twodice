@@ -9,6 +9,8 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from database import models
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 import ast
 from django.forms.models import model_to_dict
@@ -20,16 +22,19 @@ def get_skills():
               "AI", "Game Programming", "QA Testing", "User Acceptance Testing", "Systems Integration Testing",
               "Performance Testing"]
 
+@login_required
 def skills(request):
     x = {}
     x.update(csrf(request))
     skills = get_skills()
     first_time = False
-    if not models.SkillsMain.objects.filter(Username=request.user.get_username()):
+    username = request.user.get_username()
+    if not models.SkillsMain.objects.filter(Username=username):
         first_time = True
     if request.method == "POST":
-        set_skills(request.user.get_username(), request.POST.get("results"))
+        set_skills(username, request.POST.get("results"))
         if first_time:
+            Group.objects.get(name='skills').user_set.add(request.user)
             response = HttpResponse(HttpResponseRedirect("/internmatch/student/add_ref/", x))
             response['Location'] = "/internmatch/student/add_ref/"
             return response

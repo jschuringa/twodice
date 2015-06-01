@@ -5,6 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 
+def account_created(request):
+    return render_to_response("account_created.html")
+
 def home(request):
     return render(request, "home.html")
 

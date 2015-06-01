@@ -11,7 +11,11 @@ from database import models
 from django.core.context_processors import csrf
 from http.client import HTTPResponse
 from django.http.response import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from auth import permissions
 
+@login_required
+@user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
 def view(request, kind, username, *job):
     x = {}
     x.update(csrf(request))
@@ -54,11 +58,13 @@ def get_profile_info(kind, username):
         account['survey'] = surveyList.get_user_survey(user.Username)
     except:
         account['survey'] = None
-    account['email'] = user.Email
+    account['emails'] = user.Email
     account['city'] = user.City
     account['state'] = user.State
     return account
     
+@login_required
+@user_passes_test(permissions.test_is_employer, login_url='/internmatch/not_valid/')
 def results(request, username):
     apps = models.ApplicationMain.objects.filter(JobUsername=username)
     name = models.EmpDocMain.objects.get(Username=username).Title
@@ -79,6 +85,8 @@ def results(request, username):
         result_page = paginator.page(paginator.num_pages)
     return render_to_response("view_applicants.html", {"results":result_page, "job":username, "name":name})
 
+@login_required
+@user_passes_test(permissions.test_is_employer, login_url='/internmatch/not_valid/')
 def remove(request, username, job):
     app = models.ApplicationMain.objects.get(JobUsername=job, StudUsername=username)
     app.delete()

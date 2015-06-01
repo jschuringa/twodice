@@ -34,7 +34,7 @@ class testHappyStudentCreation(TestCase):
         #Contact info
         response = self.client.post('/internmatch/employer/contact_info/', 
                           {'name':'Full Privledge Company', 
-                           'email':"careers@fpc.com", "addr1":"3000 N Clark",
+                           'emails':"careers@fpc.com", "addr1":"3000 N Clark",
                            "city":"Chicago", "state":"IL", "zip":"60615"}, follow=True)
         self.assertEqual(response.status_code, 200, "Contact info HTTP status " 
                          + str(response.status_code) + " expected 200")

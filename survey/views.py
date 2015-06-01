@@ -11,22 +11,31 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 import ast
 from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+
+def group_test(user):
+    if user:
+        return user.groups.filter(name='contact').exists()
+    return False
 
 def get_survey():
     return ["Creative", "Logical", "People Skills", "Punctual", "Flexible Scheduling", "Fast Pace", "Team Oriented", "Multi-Tasking", "Efficient", "Structured"]
 
+@login_required
 def survey(request, kind):
     x = {}
     x.update(csrf(request))
     attitudes = get_survey()
+    username=request.user.get_username()
     first_time = False
-    if not models.SurveyMain.objects.filter(Username=request.user.get_username()):
+    if not models.SurveyMain.objects.filter(Username=username):
         first_time = True
     else:
-        s = models.SurveyMain.objects.get(Username=request.user.get_username())
+        s = models.SurveyMain.objects.get(Username=username)
     if request.method == "POST":
         if first_time:
-            s = models.SurveyMain(Username=request.user.get_username())
+            s = models.SurveyMain(Username=username)
         try:
             results = ast.literal_eval(request.POST.get("results"))
         except:
@@ -37,6 +46,7 @@ def survey(request, kind):
             i += 1
         s.save()
         if first_time:
+            Group.objects.get(name='survey').user_set.add(request.user)
             if kind == "student":
                 response = HttpResponse(HttpResponseRedirect("/internmatch/student/skills/", x))
                 response['Location'] = "/internmatch/student/skills/"

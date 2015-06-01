@@ -34,7 +34,7 @@ class testHappyStudentCreation(TestCase):
         #Contact info
         response = self.client.post('/internmatch/student/contact_info/', 
                           {'fname':'Can', 'lname': 'Apply', 
-                           'email':"ap_name@gmail.com", "addr1":"123 w 34th st",
+                           'emails':"ap_name@gmail.com", "addr1":"123 w 34th st",
                            "city":"Chicago", "state":"IL", "zip":"60613"}, follow=True)
         self.assertEqual(response.status_code, 200, "Contact info HTTP status " 
                          + str(response.status_code) + " expected 200")
@@ -61,12 +61,12 @@ class testHappyStudentCreation(TestCase):
         
         #References
         response = self.client.post("internmatch/student/ref", 
-                                    {"fname":"Bob", "lname":"Teacher", "email":"bteach@school.edu"},
+                                    {"fname":"Bob", "lname":"Teacher", "emails":"bteach@school.edu"},
                                     content_type="application/x-www-form-urlencoded")
         response = self.client.post("internmatch/student/ref", 
-                                    {"fname":"Sally", "lname":"Boss", "email":"sboss@work.com"},
+                                    {"fname":"Sally", "lname":"Boss", "emails":"sboss@work.com"},
                                     content_type="application/x-www-form-urlencoded")
         response = self.client.post("internmatch/student/ref", 
-                                    {"fname":"Patty", "lname":"Friend", "email":"pfriend@gmail.com"},
+                                    {"fname":"Patty", "lname":"Friend", "emails":"pfriend@gmail.com"},
                                     content_type="application/x-www-form-urlencoded")
         

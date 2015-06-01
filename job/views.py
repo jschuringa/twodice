@@ -17,7 +17,11 @@ import requests
 from django.db.models import Q
 from database.models import EmployerMain
 from upload.views import do_upload
+from django.contrib.auth.decorators import login_required, user_passes_test
+from auth import permissions
 
+@login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def apply(request, jobname):
     x = {}
     x.update(csrf(request))
@@ -61,12 +65,16 @@ def apply(request, jobname):
     x["student"] = student
     return render_to_response("apply.html", x)
 
+@login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def save(request, username):
     if not models.StudFavoritesMain.objects.filter(StudUsername=request.user.get_username(), JobUsername=username):
         f = models.StudFavoritesMain(StudUsername=request.user.get_username(), JobUsername=username, Applied=False, pub_date=date.today())
         f.save()
     return HttpResponseRedirect("/internmatch/student/favorites")
 
+@login_required
+@user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
 def delete(request, kind, username):
     if kind == 'student':
         models.StudFavoritesMain.objects.get(StudUsername=request.user.get_username(), JobUsername=username).delete()
@@ -76,11 +84,20 @@ def delete(request, kind, username):
         models.EmpDocMain.objects.get(Username=username, EmpUsername=request.user.get_username()).delete()
         return HttpResponseRedirect("/internmatch/employer/view_postings/")
 
+@login_required
+@user_passes_test(permissions.test_is_employer, login_url='/internmatch/not_valid/')
 def create(request, name):
     x = {}
     x.update(csrf(request))
     first_time = False
-    emp = models.EmployerMain.objects.get(Username=request.user.get_username())
+    username=request.user.get_username()
+    emp = models.EmployerMain.objects.get(Username=username)
+    if emp.Company == "":
+        HttpResponseRedirect("/internmatch/employer/contact_info/")
+    if not models.SurveyMain.objects.filter(Username=username):
+        HttpResponseRedirect("/internmatch/employer/survey/")
+    if not emp.Verify:
+        HttpResponse(status=301)
     if name == "create_job" or not models.EmpDocMain.objects.filter(Username=name):
         first_time = True
         x['first']=True
@@ -158,6 +175,8 @@ def create(request, name):
         x['new_skills']=skills
         return render_to_response("create_job.html", x)
 
+@login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def view(request, name):
     x = {}
     x.update(csrf(request))
@@ -173,12 +192,16 @@ def view(request, name):
         x["applied"] = True
     return render_to_response("view_job.html", x)
 
+@login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def search(request):
     x = {}
     x.update(csrf(request))
     x["zip"] = models.StudentMain.objects.get(Username=request.user.get_username())
     return render_to_response("intern_search.html", x)
 
+@login_required
+@user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
 def results(request, kind):
     x = {}
     x.update(csrf(request))
@@ -270,6 +293,8 @@ def results(request, kind):
         x['type']="employer"
         return render_to_response("view_postings.html", x)  
 
+@login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def single_results(request, username):
     x = {}
     x.update(csrf(request))

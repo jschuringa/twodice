@@ -5,16 +5,23 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Group
-import skills.views as skillList
-from survey import views as surveyList
 from database import models
 from datetime import date
 from profiles import views as profile
+from django.contrib.auth.decorators import login_required
 
-if not Group.objects.filter(name='student'):
-    Group.objects.create(name="student")
-if not Group.objects.filter(name='employer'):
-    Group.objects.create(name="employer")
+def account_created(request):
+    return render_to_response("account_created.html")
+
+def create_account(request):
+    return render_to_response("account_created.html")
+
+@login_required
+def logged_in(request):
+    return render_to_response("account_created.html")
+
+def log_in(request):
+    return render_to_response("account_created.html")
 
 def home(request):
     if request.method == "POST":
@@ -49,16 +56,18 @@ def home(request):
     items["formE"] = UserCreationForm()
     return render_to_response("home.html", items)
 
+@login_required
 def contact_info(request, kind):
     x = {}
     x.update(csrf(request))
+    username=request.user.get_username()
     first_time = False
     if kind == "student":
-        u = models.StudentMain.objects.get(Username=request.user.get_username())
+        u = models.StudentMain.objects.get(Username=username)
         if not u.Fname:
                 first_time = True
     else:
-        u = models.EmployerMain.objects.get(Username=request.user.get_username())
+        u = models.EmployerMain.objects.get(Username=username)
         if not u.Company:
             first_time = True
     if request.method == 'POST':
@@ -74,7 +83,9 @@ def contact_info(request, kind):
             u.Lname=ln
         else:
             n = request.POST.get("name")
+            t = request.POST.get("taxId")
             u.Company=n
+            u.TaxId=t
         u.Email=em
         u.Address = ad
         u.City=ci
@@ -82,11 +93,12 @@ def contact_info(request, kind):
         u.Zip=zi
         u.save()
         if first_time:
+            Group.objects.get(name='contact').user_set.add(request.user)
             return HttpResponseRedirect("/internmatch/" + kind + "/survey/")        
         else:
             return HttpResponseRedirect("/internmatch/" + kind + "/homepage/")
     if not first_time:
-        temp = {"email":u.Email, "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+        temp = {"emails":u.Email, "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
         if kind == "student":
             temp["fname"] = u.Fname
             temp["lname"] = u.Lname 
@@ -96,6 +108,7 @@ def contact_info(request, kind):
     return render_to_response(kind + "_contact_info.html", x)
 
 
+@login_required
 def homepage(request, kind):
     x = {}
     x.update(csrf(request))
