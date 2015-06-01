@@ -34,7 +34,8 @@ class StudReferenceMain(models.Model):
 	Fname = models.CharField(max_length = 200)
 	Lname = models.CharField(max_length = 200)
 	Email = models.CharField(max_length = 200)
-
+	Accepted = models.BooleanField()
+	pub_date = models.DateTimeField('date added')
 
 class StudFavoritesMain(models.Model):
 	StudUsername = models.CharField(max_length = 200)
@@ -99,7 +100,7 @@ class EmployerMainAdmin(admin.ModelAdmin):
 		e.TaxId = "0"
 		e.save()
 		emails.sendEmail(e.Email, 
-					"Hello,\nHow are you?", "What's up")
+					"Hello,\nWe regret to inform you that your organization has been rejected by our verification process.", "TwoDice Verification Rejection")
 		return e
 		
 	reject.short_description = "Reject employer's verification"

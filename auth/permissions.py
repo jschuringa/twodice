@@ -2,8 +2,7 @@
 Created on May 31, 2015
 
 @author: Jon
-'''
-    
+'''  
 def group_test(user):
     if user:
         t1 = user.groups.filter(name='contact').exists() and user.groups.filter(name='survey').exists()

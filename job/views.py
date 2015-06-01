@@ -40,7 +40,7 @@ def apply(request, jobname):
             cl = filec.name
             cl = do_upload(filec, "cover_letter", username)
         elif request.POST.get("cl_list"):
-            cl = request.POST.get("cl_list")   
+            cl = request.POST.get("cl_list")  
         a = models.ApplicationMain(StudUsername=request.user.get_username(), JobUsername=jobname, 
                                Resume=res, CoverLetter=cl, pub_date=date.today())
         a.save()

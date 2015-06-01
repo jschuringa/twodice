@@ -32,8 +32,6 @@ def view(request, kind, username, *job):
         account = get_profile_info("employer", username)
         x['account'] = account
         return render_to_response("view_employer.html", x)
-    #end demo
-    
     if kind == "view_student":
         return render_to_response("view_student.html", {"account":account})
     else:
@@ -58,7 +56,7 @@ def get_profile_info(kind, username):
         account['survey'] = surveyList.get_user_survey(user.Username)
     except:
         account['survey'] = None
-    account['emails'] = user.Email
+    account['email'] = user.Email
     account['city'] = user.City
     account['state'] = user.State
     return account

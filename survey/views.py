@@ -14,11 +14,6 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
-def group_test(user):
-    if user:
-        return user.groups.filter(name='contact').exists()
-    return False
-
 def get_survey():
     return ["Creative", "Logical", "People Skills", "Punctual", "Flexible Scheduling", "Fast Pace", "Team Oriented", "Multi-Tasking", "Efficient", "Structured"]
 
