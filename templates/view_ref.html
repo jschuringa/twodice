@@ -8,7 +8,7 @@
 	<div id="reference_list">
 		<ul id="reference_list">
 		    {% for reference in references %}
-		    <li id="{{ forloop.counter }}">{{ reference }}</li>
+		    <li id="{{ forloop.counter }}">{{ reference.Fname }} {{ reference.Lname }} -- <b>Email:</b> <u>{{ reference.Email}}</u></li>
 		    {% endfor %}
 		</ul>
 	</div>
