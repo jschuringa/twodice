@@ -4,7 +4,7 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <h2>Add a Reference</h2>	
 <table>
-<form action="/internmatch/student/get_ref/" method="post">
+<form action="/internmatch/student/add_ref/" method="post">
 	{% csrf_token %}
 	<input type="hidden" name="csrfmiddlewaretoken" value="pHK2CZzBB323BM2Nq7DE2sxnQoBG1jPl" disabled="">
 	<tr>
@@ -18,6 +18,10 @@
 	<tr>
 	<td><label for="email">Email:</label>
 	<td><input type="email" name="email" value="" id="email">
+	</tr>
+	<tr>
+	<td><label for="relation">Relationship to you:</label>
+	<td><input type="text" name="relation" value="" id="relation">
 	</tr>
 	<tr>
 	<td><input type="submit" value="Request Reference" />

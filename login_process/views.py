@@ -98,7 +98,7 @@ def contact_info(request, kind):
         else:
             return HttpResponseRedirect("/internmatch/" + kind + "/homepage/")
     if not first_time:
-        temp = {"emails":u.Email, "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+        temp = {"email":u.Email, "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
         if kind == "student":
             temp["fname"] = u.Fname
             temp["lname"] = u.Lname 

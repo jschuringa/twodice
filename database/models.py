@@ -7,6 +7,7 @@ import re
 from http.client import HTTPResponse
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.models import Group
+import uuid
 # Create your models here.
 
 class StudentMain(models.Model):
@@ -30,10 +31,12 @@ class StudentDocMain(models.Model):
 
 class StudReferenceMain(models.Model):
 	Username = models.CharField(max_length = 200)
-	content = models.TextField()
 	Fname = models.CharField(max_length = 200)
 	Lname = models.CharField(max_length = 200)
 	Email = models.CharField(max_length = 200)
+	Relation = models.CharField(max_length = 200)
+	Verify = models.BooleanField()
+	transactionref=models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
 
 
 class StudFavoritesMain(models.Model):

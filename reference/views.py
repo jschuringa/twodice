@@ -4,7 +4,6 @@ Created on May 10, 2015
 @author: Jon
 '''
 from django.shortcuts import render_to_response
-from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -13,6 +12,7 @@ from database import models
 from django.contrib import auth
 import ast
 from django.forms.models import model_to_dict
+from emails import email
 
 
 def get_refs(request):
@@ -22,14 +22,33 @@ def get_refs(request):
 	return refs
 	
 def add_reference(request):
-	return render_to_response("student_ref.html")
+	x = {}
+	x.update(csrf(request))
+	username = request.user.get_username()
+	if request.method == "POST":
+		s = models.StudentMain.objects.get(Username=username)
+		fname=request.POST.get("fname")
+		lname=request.POST.get("lname")
+		em=request.POST.get("email")
+		relation = request.POST.get("relation")
+		r = models.StudReferenceMain(Username=username, Fname=fname, Lname=lname, 
+									Relation=relation, Email=em, Verify=False)
+		r.save()
+		host = request.get_host()
+		email.sendEmail(r.Email, "Hi "+r.Fname+",\nThis is an email from TwoDice, a site where students can find internships. "+s.Fname+" "+s.Lname+" would like to use you as a reference. If that's ok please click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/accept/ If you don't want to be a reference click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/decline/ \nThanks for your help,\nTwoDice support", s.Fname + " " + s.Lname + " would like to use you as a reference on TwoDice")
+	return render_to_response("student_ref.html", x)
 
+def accept(request, ref):
+	r = models.StudReferenceMain.objects.get(transactionref=ref)
+	r.Verify = True
+	r.save()
+	return render_to_response("thank_ref.html")
 
-def send_email(request):
-        x = {}
-        x.update(csrf(request))
-        return render_to_response("student_ref.html",x)
-                
+def decline(request, ref):
+	r = models.StudReferenceMain.objects.get(transactionref=ref)
+	r.delete()
+	return render_to_response("sorry_ref.html")
+
 def view_references(request):
     x = {}
     x.update(csrf(request))
@@ -37,34 +56,6 @@ def view_references(request):
     first_time = False
     if not models.StudReferenceMain.objects.filter(Username=request.user.get_username()):
         first_time = True
-    else:
-        #s = models.StudReferenceMain.objects.get(Username=request.user.get_username())
-    	pass
-    if request.method == "POST":
-        if first_time:
-            s = models.StudReferenceMain(Username=request.user.get_username())
-        try:
-            results = ast.literal_eval(request.POST.get("results"))
-        except:
-            results = request.POST.get("results")
-        i = 1
-        for r in results:
-            setattr(s, "Choice"+str(i), r)
-            i += 1
-        s.save()
-        if first_time:
-            if kind == "student":
-                response = HttpResponse(HttpResponseRedirect("/internmatch/student/view_ref/", x))
-                response['Location'] = "/internmatch/student/view_ref/"
-                return response
-            else:
-                response = HttpResponse(HttpResponseRedirect("/internmatch/employer/homepage/", x))
-                response['Location'] = "/internmatch/employer/homepage/"
-                return response
-        else:
-            response = HttpResponse(HttpResponseRedirect("/internmatch/"+ kind + "/homepage/", x))
-            response['Location'] = "/internmatch/"+ kind + "/homepage/"
-            return response
     x['references']=references
     return render_to_response("view_ref.html", x)
 
