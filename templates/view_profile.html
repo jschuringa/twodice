@@ -32,6 +32,36 @@
 						<h4>{{account.skills_match}}% Match</h4>
 					{%endif%}
 				</div>
+			<div id="references">
+				<h3>References:</h3>
+				<table>
+				{% if not me %}
+				{% for r in refs %}
+					{% if r.Verify %}
+						<tr>
+							<td>Name:</td><td>{{r.Fname}} {{r.Lname}}</td>
+							<td>Relation:</td><td>{{r.Relation}}</td>
+							<td>Email:</td><td><a href="mailto:{{r.Email}}">{{r.Email}}</a></td>
+						</tr>
+					{% endif %}
+				{% empty %}
+					<tr><td>No References</td></tr>
+				{% endfor %}
+				</table>
+				{% else %}
+				{% for r in refs %}
+					<tr>
+						<td>Name:</td><td>{{r.Fname}} {{r.Lname}}</td>
+						<td>Relation:</td><td>{{r.Relation}}</td>
+						<td>Email:</td><td>{{r.Email}}</td>
+						<td>Verified:</td><td>{% if r.Verify %}Yes{% else %}No{% endif %}</td>
+					</tr>
+				{% empty %}
+					<tr><td>No References</td></tr>
+				{% endfor %}
+				</table>
+				{% endif %}
+			</div>
 			</div>
 				{% if not me %}
 					{% if resume %}

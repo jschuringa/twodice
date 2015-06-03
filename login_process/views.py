@@ -113,8 +113,11 @@ def homepage(request, kind):
     x = {}
     x.update(csrf(request))
     account = {}
-    account.update(profile.get_profile_info(kind, request.user.get_username()))
+    username = request.user.get_username()
+    account.update(profile.get_profile_info(kind, username))
     x['account'] = account
+    if kind == 'student':
+        x['refs'] = models.StudReferenceMain.objects.filter(Username=username)
     return render_to_response(kind + "_homepage.html", x)
 
 def log_out(request):

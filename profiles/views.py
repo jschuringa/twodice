@@ -27,6 +27,8 @@ def view(request, kind, username, *job):
         x["resume"] = app.Resume
         x["cl"] = app.CoverLetter
         x['job'] = job[0]
+        refs = models.StudReferenceMain.objects.filter(Username=username)
+        x['refs'] = refs
         return render_to_response("view_student.html", x)
     else:
         account = get_profile_info("employer", username)
