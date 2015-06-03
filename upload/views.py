@@ -13,9 +13,11 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.servers.basehttp import FileWrapper
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from auth import permissions
 
 @login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def upload(request):
     x = {}
     x.update(csrf(request))
@@ -30,7 +32,6 @@ def upload(request):
         return HttpResponseRedirect("/internmatch/student/view_docs/")
     return render_to_response("student_doc_upload.html", x)
 
-@login_required
 def do_upload(file, kind, username):
     name = file.name
     names = name.split(".")
@@ -46,6 +47,7 @@ def do_upload(file, kind, username):
     return name
 
 @login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def view(request):
     docs = models.StudentDocMain.objects.filter(Username=request.user.get_username())
     res = []
@@ -57,6 +59,8 @@ def view(request):
             cls.append(doc)
     return render_to_response("view_docs.html", {"resumes":res, "cover_letters":cls})
 
+@login_required
+@user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
 def download(request, username, name):
     typ = name.split(".")
     typ = typ[1]
@@ -65,6 +69,7 @@ def download(request, username, name):
     return response
 
 @login_required
+@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
 def delete(request, username, name):
     doc = models.StudentDocMain.objects.get(Username=username, Doc=name)
     doc.delete()

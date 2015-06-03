@@ -58,7 +58,7 @@ def get_profile_info(kind, username):
         account['survey'] = surveyList.get_user_survey(user.Username)
     except:
         account['survey'] = None
-    account['emails'] = user.Email
+    account['email'] = user.Email
     account['city'] = user.City
     account['state'] = user.State
     return account
