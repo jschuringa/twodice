@@ -17,6 +17,29 @@ function getCookie(name) {
 }
 
 $(document).ready(function() {
+    $("input:text").focus(function() { $(this).select(); } );
+});
+
+$(document).ready(function() {
+    $("input[type=email]").focus(function() { $(this).select(); } );
+});
+
+$(document).ready(function() {
+    $("input[type=password]").focus(function() { $(this).select(); } );
+});
+
+$(document).ready(function() {
+    $("textarea").focus(function() { $(this).select(); } );
+});
+
+$(document).ready(function(){
+	$("[id*=id_password1]").after("<br>");
+	var w = $("label[for*=id_password2").width();
+	$("[id*=id_password1]").css("margin-left", w - $("label[for*=id_password1").width());
+	$("[id*=id_username]").css("margin-left", w - $("label[for*=id_username").width());
+})
+
+$(document).ready(function() {
     $( "#baseList, #myList" ).sortable({
       connectWith: ".draggable"
     }).disableSelection();

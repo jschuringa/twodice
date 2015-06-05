@@ -66,6 +66,9 @@
 	margin:0px;
 	padding-left:5px;
 }
+#signUp span{
+	display:block;
+}
 /* firefox specific code */
 @-moz-document url-prefix() {
 	.draggable li, .sortable li{

@@ -114,3 +114,5 @@ STATICFILES_FINDERS = (
 'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
