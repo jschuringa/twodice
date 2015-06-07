@@ -22,7 +22,8 @@ urlpatterns = [
     url(r'^internmatch/$', 'login_process.views.home'),
     
     url(r'^internmatch/log_in/$',  'login_process.views.log_in'),
-    url(r'^internmatch/auth/$',  'login_process.views.auth_new'),    
+    url(r'^internmatch/auth/$',  'login_process.views.auth_new'),  
+    url(r'^internmatch/fb_auth/$',  'login_process.views.fb_auth'),  
     url(r'^internmatch/log_out/$', 'login_process.views.log_out'),
     url(r'^internmatch/logged_in/$', 'login_process.views.logged_in'),
     url(r'^internmatch/not_valid/$', 'login_process.views.not_valid'),

@@ -40,6 +40,8 @@ INSTALLED_APPS = (
     'database',
     'requests',
     'emails',
+    'scheduled',
+    'social_auth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,13 +86,39 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.browserid.BrowserIDBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TWITTER_CONSUMER_KEY         = 'DSnRZgRMAJ1B5WPl09eA2UqbA '
+TWITTER_CONSUMER_SECRET      = 'IPDAPxDSRyZ0KvO9Ui3bcAha9bQII2vN0Cq8YKjZzYPf6M8SwM'
+FACEBOOK_APP_ID              = '1582991108636484'
+FACEBOOK_API_SECRET          = '2936f58c571c63ac0687c99c4744adce'
+LINKEDIN_CONSUMER_KEY        = ''
+LINKEDIN_CONSUMER_SECRET     = ''
+GOOGLE_CONSUMER_KEY          = ''
+GOOGLE_CONSUMER_SECRET       = ''
+GOOGLE_OAUTH2_CLIENT_ID      = '961695805820-dirguti8onqt1saupt741pju1inn240f.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET  = 'LN-nj5VrSoOTomJZARslt6-r'
+
+LOGIN_URL          = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL    = '/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC-5'
+TIME_ZONE = 'US/Central'
 
 USE_I18N = True
 

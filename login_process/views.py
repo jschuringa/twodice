@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth.models import Group
 from database import models
 from datetime import date
@@ -27,19 +28,27 @@ def home(request):
     if request.method == "POST":
         formS = UserCreationForm(request.POST)
         formE = UserCreationForm(request.POST)
-        if formS.is_valid() and request.POST.get("student"):
+        if request.POST.get("student") and request.POST.get('password1') and request.POST.get('password2'):
             user = formS.save()
             u = models.StudentMain(Username=user.username, pub_date=date.today())
             new_user = auth.authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             auth.login(request, new_user)
+            if request.POST.get("fname"):
+                u.Fname = request.POST.get("fname")
+                u.Lname = request.POST.get("lname")
+                u.Email = request.POST.get("email")
             u.save()
             request.META.get('HTTP_UID')
             Group.objects.get(name='student').user_set.add(user)
-            return HttpResponseRedirect("/internmatch/student/contact_info/")
+            response = HttpResponse(HttpResponseRedirect("/internmatch/student/contact_info/"))
+            response['Location'] = '/internmatch/student/contact_info/'
+            return response
         elif request.POST.get("student"):
-            return HttpResponseRedirect("/internmatch/not_valid")
-        if formE.is_valid() and request.POST.get("employer"):
+            response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
+            response['Location'] = "/internmatch/not_valid"
+            return response
+        if request.POST.get("employer") and request.POST.get('password1') and request.POST.get('password2'):
             user = formE.save()
             u = models.EmployerMain(Username=user.username, pub_date=date.today(), Verify=False)
             new_user = auth.authenticate(username=request.POST['username'],
@@ -47,9 +56,13 @@ def home(request):
             auth.login(request, new_user)
             u.save()
             Group.objects.get(name='employer').user_set.add(user)
-            return HttpResponseRedirect("/internmatch/employer/contact_info/")
+            response = HttpResponse(HttpResponseRedirect("/internmatch/employer/contact_info/"))
+            response['Location'] = "/internmatch/employer/contact_info/"
+            return response
         elif request.POST.get("employer"):
-            return HttpResponseRedirect("/internmatch/not_valid")
+            response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
+            response['Location'] = "/internmatch/not_valid"
+            return response
     items = {}
     items.update(csrf(request))
     items["formS"] = UserCreationForm()
@@ -62,10 +75,13 @@ def contact_info(request, kind):
     x.update(csrf(request))
     username=request.user.get_username()
     first_time = False
+    soc_first_time = False
     if kind == "student":
         u = models.StudentMain.objects.get(Username=username)
         if not u.Fname:
-                first_time = True
+            first_time = True
+        if not u.Address:
+            soc_first_time = True
     else:
         u = models.EmployerMain.objects.get(Username=username)
         if not u.Company:
@@ -98,7 +114,10 @@ def contact_info(request, kind):
         else:
             return HttpResponseRedirect("/internmatch/" + kind + "/homepage/")
     if not first_time:
-        temp = {"email":u.Email, "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+        temp = {}
+        if not soc_first_time:
+            temp = { "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+        temp["email"] = u.Email
         if kind == "student":
             temp["fname"] = u.Fname
             temp["lname"] = u.Lname 
@@ -125,7 +144,9 @@ def log_out(request):
     return render_to_response("log_out.html")
     
 def not_valid(request):
-    return render_to_response("not_valid.html")
+    response = render_to_response("not_valid.html")
+    response.status_code = 403
+    return response
 
 def auth_new(request):
     username = request.POST.get("username", "")
@@ -134,8 +155,24 @@ def auth_new(request):
     if user is not None:
         auth.login(request,user)
         if user.groups.all()[0].name == "student":
-            return HttpResponseRedirect("/internmatch/student/homepage/", {'user':user.id})
+            response = HttpResponse(HttpResponseRedirect("/internmatch/student/homepage/", {'user':user.id}))
+            response['Location'] = '/internmatch/student/homepage/'
+            return response
         else:
-            return HttpResponseRedirect("/internmatch/employer/homepage/", {'user':user.id})
+            response = HttpResponse(HttpResponseRedirect("/internmatch/employer/homepage/", {'user':user.id}))
+            response['Location'] = '/internmatch/employer/homepage/'
+            return response
     else:
-        return HttpResponseRedirect("/internmatch/not_valid")
+        response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
+        response['Location'] = '/internmatch/not_valid'
+        return response
+    
+def fb_auth(request):
+    x = {}
+    x.update(csrf(request))
+    
+    if models.StudentMain.objects.filter(Username=request.POST.get('username')):
+        return auth_new(request)
+    else:
+        return home(request)
+        

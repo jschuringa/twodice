@@ -20,6 +20,9 @@ def get_refs(request):
 	x.update(csrf(request))
 	refs = models.StudReferenceMain.objects.filter(Username=request.user.get_username())
 	return refs
+
+def send_email(request):
+	return add_reference(request)
 	
 def add_reference(request):
 	x = {}
