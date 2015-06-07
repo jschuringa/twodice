@@ -6,13 +6,14 @@ Created on May 10, 2015
 from django.shortcuts import render_to_response
 import skills.views as skillList
 from survey import views as surveyList
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from database import models
 from django.core.context_processors import csrf
-from http.client import HTTPResponse
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from auth import permissions
+from search import search
+from pages import paginate
+from django.template import RequestContext
 
 @login_required
 @user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
@@ -21,6 +22,7 @@ def view(request, kind, username, *job):
     x.update(csrf(request))
     account = {}
     if kind == "view_student":
+        emp = models.EmployerMain.objects.get(Username=request.user.get_username())
         account = get_profile_info("student", username)
         x['account'] = account
         app = models.ApplicationMain.objects.get(JobUsername=job[0], StudUsername=username)
@@ -28,14 +30,16 @@ def view(request, kind, username, *job):
         x["cl"] = app.CoverLetter
         x['job'] = job[0]
         refs = models.StudReferenceMain.objects.filter(Username=username)
+        x['account']['survey_match'] = search.cultureMatchSingle(surveyList.get_survey_nums(emp),
+                                                       surveyList.get_survey_nums(username))
+        x['account']['skills_match'] = search.skillMatchSingle(skillList.get_user_skills(job[0]),
+                                                       skillList.get_user_skills(username))
         x['refs'] = refs
         return render_to_response("view_student.html", x)
     else:
         account = get_profile_info("employer", username)
         x['account'] = account
         return render_to_response("view_employer.html", x)
-    #end demo
-    
     if kind == "view_student":
         return render_to_response("view_student.html", {"account":account})
     else:
@@ -69,23 +73,22 @@ def get_profile_info(kind, username):
 @user_passes_test(permissions.test_is_employer, login_url='/internmatch/not_valid/')
 def results(request, username):
     apps = models.ApplicationMain.objects.filter(JobUsername=username)
-    name = models.EmpDocMain.objects.get(Username=username).Title
+    e = models.EmpDocMain.objects.get(Username=username)
+    name = e.Title
+    emp = e.EmpUsername
     results = []
     for a in apps:
-        account = get_profile_info("student", a.StudUsername)
+        studUsername = a.StudUsername
+        account = get_profile_info("student", studUsername)
+        account['survey_match'] = search.cultureMatchSingle(surveyList.get_survey_nums(emp),
+                                                       surveyList.get_survey_nums(studUsername))
+        account['skills_match'] = search.skillMatchSingle(skillList.get_user_skills(username),
+                                                       skillList.get_user_skills(studUsername))
         results.append(account)
-    paginator = Paginator(results, 10)
 
     page = request.GET.get('page')
-    try:
-        result_page = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        result_page = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        result_page = paginator.page(paginator.num_pages)
-    return render_to_response("view_applicants.html", {"results":result_page, "job":username, "name":name})
+    result_page = paginate.paginate(results, page)
+    return render_to_response("view_applicants.html", {"results":result_page, "job":username, "name":name}, context_instance=RequestContext(request))
 
 @login_required
 @user_passes_test(permissions.test_is_employer, login_url='/internmatch/not_valid/')

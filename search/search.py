@@ -35,11 +35,21 @@ def skillMatch(matchDict, userSkills, compJobDict):
                 break
     return jobMatchList
 
-def cultureMatchSingle(userCulture, compCulture):
+def cultureMatchSingle(userCulture, studCulture):
     cultureScore = 0
     for i in range(0, len(userCulture)):
-        for j in range(0, len(compCulture)):
-            if userCulture[i] == compCulture[j]:
+        for j in range(0, len(studCulture)):
+            if userCulture[i] == studCulture[j]:
                 cultureScore += abs(i - j)
+    cultureScore = 100 - cultureScore * 2
     return cultureScore
+
+def skillMatchSingle(userSkills, studSkills):
+    match = 0
+    for i in userSkills:
+        for j in studSkills:
+            if i == j:
+                match += 1
+    return match
+    
 

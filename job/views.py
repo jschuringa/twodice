@@ -6,7 +6,6 @@ Created on May 10, 2015
 from django.shortcuts import render_to_response
 import skills.views as skillList
 from survey import views as surveyList
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from database import models
 from datetime import date
 from django.http import HttpResponseRedirect
@@ -20,7 +19,8 @@ from upload.views import do_upload
 from django.contrib.auth.decorators import login_required, user_passes_test
 from auth import permissions
 from search import search as matcher
-import operator
+from pages import paginate
+from django.template import RequestContext
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
@@ -98,8 +98,6 @@ def create(request, name):
         HttpResponseRedirect("/internmatch/employer/contact_info/")
     if not models.SurveyMain.objects.filter(Username=username):
         HttpResponseRedirect("/internmatch/employer/survey/")
-    if not emp.Verify:
-        HttpResponse(status=301)
     if name == "create_job" or not models.EmpDocMain.objects.filter(Username=name):
         first_time = True
         x['first']=True
@@ -276,45 +274,39 @@ def results(request, kind):
         lst = []
         emps = {}
         jskills = {}
+        uskills = skillList.get_user_skills(username)
         for j in jobs:
+            jname = j.Username
+            ename = j.EmpUsername
             if j.EmpUsername not in emps:
-                emps[j.EmpUsername] = surveyList.get_survey_nums(j.EmpUsername)
-            temp = {j.Username:skillList.get_user_skills(j.Username)}
-            if j.EmpUsername in jskills:
-                jskills[j.EmpUsername].update(temp)
+                emps[ename] = surveyList.get_survey_nums(ename)
+            temp = {jname:skillList.get_user_skills(jname)}
+            if ename in jskills:
+                jskills[ename].update(temp)
             else:
-                jskills[j.EmpUsername] = temp
+                jskills[ename] = temp
         matches = matcher.startSearch(surveyList.get_survey_nums(username),
                                     skillList.get_user_skills(username), emps, jskills)
         results = get_job_list(matches)
-        results = sorted(results, key=operator.itemgetter('skills_match'), reverse=True)
-        results = sorted(results, key=operator.itemgetter('survey_match'))        
+        results = sorted(results, key= lambda k: ((k['skills_match']/len(uskills)/2)+k['survey_match']/100)/2, reverse=True)        
     if kind == "favorites":
         for r in results:
             if models.StudFavoritesMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
                 r["favorite"] = True
             if models.ApplicationMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
                 r["applied"] = True
-    paginator = Paginator(results, 10)
     page = request.GET.get('page')
-    try:
-        result_page = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        result_page = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        result_page = paginator.page(paginator.num_pages)
-    x['results'] = result_page
+    x['results'] = paginate.paginate(results, page)
+   # x['all_results'] = results
     if kind == "search_results":
         x['type']="search"
-        return render_to_response("search_results.html", x)
+        return render_to_response("search_results.html", x, context_instance=RequestContext(request))
     elif kind == "favorites":
         x['type']="student"
-        return render_to_response("student_favorites.html", x)
+        return render_to_response("student_favorites.html", x, context_instance=RequestContext(request))
     else:
         x['type']="employer"
-        return render_to_response("view_postings.html", x)  
+        return render_to_response("view_postings.html", x, context_instance=RequestContext(request))  
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
@@ -323,21 +315,11 @@ def single_results(request, username):
     x.update(csrf(request))
     jobs = models.EmpDocMain.objects.filter(EmpUsername=username)
     results = get_job_list(jobs)
-    paginator = Paginator(results, 10)
-
     page = request.GET.get('page')
-    try:
-        result_page = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        result_page = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        result_page = paginator.page(paginator.num_pages)
-    x['results'] = result_page
+    x['results'] = paginate.paginate(results, page)
     x['type']="view_employer"
     x["employer"]= username
-    return render_to_response("view_employer_postings.html", x)
+    return render_to_response("view_employer_postings.html", x, context_instance=RequestContext(request))
 
     
 def get_job_list(jobs):
@@ -384,3 +366,6 @@ def get_job(job, matches):
     temp['survey_match'] = matches[0]
     temp['skills_match'] = matches[1]
     return temp
+
+
+

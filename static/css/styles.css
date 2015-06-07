@@ -1,5 +1,6 @@
 .flex{
 	display:flex;
+	flex-wrap:wrap;
 }
 #newStudent{
 	margin-right:10px;
