@@ -34,7 +34,8 @@
 				  $.ajax({url:"/internmatch/fb_auth/", type:'POST', data:{"username":username, "password":pwd,
 					  														"password1":pwd, "password2":pwd, "type":kind,
 					  														"student":"Register", "fname":response.first_name, 
-					  														"lname":response.last_name, "email":response.email}, 
+					  														"lname":response.last_name, "email":response.email,
+					  														"social":true}, 
 						success:function(data, status, xhr) {
 							window.location.pathname = xhr.getResponseHeader("Location").replace(/.*?:\/\/.*?\//, "");
 						}

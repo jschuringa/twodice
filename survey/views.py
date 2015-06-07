@@ -69,3 +69,10 @@ def get_user_survey(username):
     for i in range(1,11):
         survey.append(survey_list[survey_nums['Choice'+str(i)]-1])
     return survey
+
+def get_survey_nums(username):
+    survey_nums = model_to_dict(models.SurveyMain.objects.get(Username=username))
+    survey = []
+    for i in range(1,11):
+        survey.append(int(survey_nums['Choice'+str(i)])-1)
+    return survey

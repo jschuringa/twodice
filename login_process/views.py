@@ -34,20 +34,26 @@ def home(request):
             new_user = auth.authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             auth.login(request, new_user)
-            if request.POST.get("fname"):
+            if request.POST.get("social"):
                 u.Fname = request.POST.get("fname")
                 u.Lname = request.POST.get("lname")
                 u.Email = request.POST.get("email")
             u.save()
             request.META.get('HTTP_UID')
             Group.objects.get(name='student').user_set.add(user)
-            response = HttpResponse(HttpResponseRedirect("/internmatch/student/contact_info/"))
-            response['Location'] = '/internmatch/student/contact_info/'
-            return response
+            if request.POST.get("social"):
+                response = HttpResponse(HttpResponseRedirect("/internmatch/student/contact_info/"))
+                response['Location'] = '/internmatch/student/contact_info/'
+                return response
+            else:
+                return HttpResponseRedirect("/internmatch/student/contact_info/")
         elif request.POST.get("student"):
-            response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
-            response['Location'] = "/internmatch/not_valid"
-            return response
+            if request.POST.get("social"):
+                response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
+                response['Location'] = "/internmatch/not_valid"
+                return response
+            else:
+                return HttpResponseRedirect("/internmatch/not_valid")
         if request.POST.get("employer") and request.POST.get('password1') and request.POST.get('password2'):
             user = formE.save()
             u = models.EmployerMain(Username=user.username, pub_date=date.today(), Verify=False)
@@ -56,13 +62,9 @@ def home(request):
             auth.login(request, new_user)
             u.save()
             Group.objects.get(name='employer').user_set.add(user)
-            response = HttpResponse(HttpResponseRedirect("/internmatch/employer/contact_info/"))
-            response['Location'] = "/internmatch/employer/contact_info/"
-            return response
+            return HttpResponseRedirect("/internmatch/employer/contact_info/")
         elif request.POST.get("employer"):
-            response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
-            response['Location'] = "/internmatch/not_valid"
-            return response
+            return HttpResponseRedirect("/internmatch/not_valid")
     items = {}
     items.update(csrf(request))
     items["formS"] = UserCreationForm()
@@ -155,17 +157,26 @@ def auth_new(request):
     if user is not None:
         auth.login(request,user)
         if user.groups.all()[0].name == "student":
-            response = HttpResponse(HttpResponseRedirect("/internmatch/student/homepage/", {'user':user.id}))
-            response['Location'] = '/internmatch/student/homepage/'
+            if request.POST.get("social"):
+                response = HttpResponse(HttpResponseRedirect("/internmatch/student/homepage/", {'user':user.id}))
+                response['Location'] = '/internmatch/student/homepage/'
+                return response
+            else:
+                return HttpResponseRedirect("/internmatch/student/homepage/", {'user':user.id})
+        else:
+            if request.POST.get("social"):
+                response = HttpResponse(HttpResponseRedirect("/internmatch/employer/homepage/", {'user':user.id}))
+                response['Location'] = '/internmatch/employer/homepage/'
+                return response
+            else:
+                return HttpResponseRedirect("/internmatch/employer/homepage/", {'user':user.id})
+    else:
+        if request.POST.get("social"):
+            response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
+            response['Location'] = '/internmatch/not_valid'
             return response
         else:
-            response = HttpResponse(HttpResponseRedirect("/internmatch/employer/homepage/", {'user':user.id}))
-            response['Location'] = '/internmatch/employer/homepage/'
-            return response
-    else:
-        response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
-        response['Location'] = '/internmatch/not_valid'
-        return response
+            return HttpResponseRedirect("/internmatch/not_valid")
     
 def fb_auth(request):
     x = {}

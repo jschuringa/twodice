@@ -7,13 +7,10 @@ def startSearch(userCulture, userSkills, compCultureDict, compJobDict):
 
 def cultureMatch(userCulture, compCultureDict):
     cultureMatchDict = {}
-    cultureScore = 0
-    for key, value in compCultureDict:
+    for key in compCultureDict:
         cultureScore = 0
-        for i in range(0, len(userCulture)):
-            for j in range(0, len(value)):
-                if userCulture[i] == value[j]:
-                    cultureScore += abs(i - j)
+        value=compCultureDict[key]
+        cultureScore = cultureMatchSingle(userCulture, value)
         cultureMatchDict[key] = cultureScore
 
     sortedList = sorted(cultureMatchDict.items(), key=operator.itemgetter(1))
@@ -21,18 +18,28 @@ def cultureMatch(userCulture, compCultureDict):
 
     
 def skillMatch(matchDict, userSkills, compJobDict):
-    jobMatchList = []
-    for key, value in matchDict:
-        for comp, dict in compJobDict:
+    jobMatchList = {}
+    for key in matchDict:
+        value = matchDict[key]
+        for comp in compJobDict:
+            dic = compJobDict[comp]
             if key == comp:
-                for job, skills in dict:
+                for job in dic:
+                    skills = dic[job]
+                    match = 0
                     for i in userSkills:
                         for j in skills:
                             if i == j:
-                                jobMatchList.append(job)
-            break
+                                match += 1
+                    jobMatchList[job] = [value, match]
+                break
     return jobMatchList
 
-
-
+def cultureMatchSingle(userCulture, compCulture):
+    cultureScore = 0
+    for i in range(0, len(userCulture)):
+        for j in range(0, len(compCulture)):
+            if userCulture[i] == compCulture[j]:
+                cultureScore += abs(i - j)
+    return cultureScore
 

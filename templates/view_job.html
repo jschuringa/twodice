@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>{{job.survey_match}}% Match</td>
-				<td style="padding-left:10px;">{{job.skills_match}}% Match</td>
+				<td style="padding-left:10px;">{{job.skills_match}} Skills Matched</td>
 			</tr>
 
 		</table>
@@ -32,7 +32,7 @@
 		{% if applied %}
 			Already Applied
 		{% else %}
-			<a href="/internmatch/student/apply/{{job.Username}}"><input type="button" id="apply" value="Apply for Internship"/></a>
+			<a href="/internmatch/student/apply/{{job.Username}}/{{job.survey_match}}/{{job.skills_match}}"><input type="button" id="apply" value="Apply for Internship"/></a>
 		{% endif %}
 		{% if saved %}
 			<a href="/internmatch/student/delete/{{job.Username}}"><input type="button" id="delete" value="Remove Internship"/></a>

@@ -19,10 +19,12 @@ from database.models import EmployerMain
 from upload.views import do_upload
 from django.contrib.auth.decorators import login_required, user_passes_test
 from auth import permissions
+from search import search as matcher
+import operator
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
-def apply(request, jobname):
+def apply(request, jobname, survey, skill):
     x = {}
     x.update(csrf(request))
     username = request.user.get_username()
@@ -60,7 +62,7 @@ def apply(request, jobname):
         student["resumes"].append(r.Doc)
     for c in cls:
         student["cover_letters"].append(c.Doc)
-    job = get_job(models.EmpDocMain.objects.get(Username=jobname))
+    job = get_job(jobname, [survey, skill])
     x["job"] = job
     x["student"] = student
     return render_to_response("apply.html", x)
@@ -177,12 +179,14 @@ def create(request, name):
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
-def view(request, name):
+def view(request, name, survey, skill):
     x = {}
     x.update(csrf(request))
     job = model_to_dict(models.EmpDocMain.objects.get(Username=name))
     job['survey'] = surveyList.get_user_survey(job['EmpUsername'])
     job['skills'] = skillList.get_user_skills(job['Username'])
+    job['survey_match'] = survey
+    job['skills_match'] = skill
     x['job'] = job
     e = models.EmployerMain.objects.get(Username=job['EmpUsername'])
     x['employer'] = e.Company
@@ -205,13 +209,16 @@ def search(request):
 def results(request, kind):
     x = {}
     x.update(csrf(request))
+    username = request.user.get_username()
     if kind == "view_postings":
         jobs = models.EmpDocMain.objects.filter(EmpUsername=request.user.get_username())
+        results = get_emp_jobs(jobs)
     elif kind == 'favorites':
         lst = models.StudFavoritesMain.objects.filter(StudUsername=request.user.get_username())
         jobs = []
         for job in lst:
-            jobs.append(models.EmpDocMain.objects.get(Username=job.JobUsername)) 
+            j = models.EmpDocMain.objects.get(Username=job.JobUsername)
+            jobs.append(j)
     elif kind == "search_results":
         if not request.GET.get("national"):
             if request.GET.get("home_zip") == "home_zip":
@@ -265,7 +272,23 @@ def results(request, kind):
         
     else:
         jobs = models.EmpDocMain.objects.all()
-    results = get_job_list(jobs)
+    if kind == 'favorites' or kind == 'search_results':
+        lst = []
+        emps = {}
+        jskills = {}
+        for j in jobs:
+            if j.EmpUsername not in emps:
+                emps[j.EmpUsername] = surveyList.get_survey_nums(j.EmpUsername)
+            temp = {j.Username:skillList.get_user_skills(j.Username)}
+            if j.EmpUsername in jskills:
+                jskills[j.EmpUsername].update(temp)
+            else:
+                jskills[j.EmpUsername] = temp
+        matches = matcher.startSearch(surveyList.get_survey_nums(username),
+                                    skillList.get_user_skills(username), emps, jskills)
+        results = get_job_list(matches)
+        results = sorted(results, key=operator.itemgetter('skills_match'), reverse=True)
+        results = sorted(results, key=operator.itemgetter('survey_match'))        
     if kind == "favorites":
         for r in results:
             if models.StudFavoritesMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
@@ -321,12 +344,23 @@ def get_job_list(jobs):
     results = []
     temp = {}
     for j in jobs:
-        temp = get_job(j)
+        matches = jobs[j]
+        temp = get_job(j, matches)
         results.append(temp)
         temp = {}
     return results
 
-def get_job(job):
+def get_emp_jobs(jobs):
+    results = []
+    temp = {}
+    for j in jobs:
+        temp = get_job(j.Username, [0,0])
+        results.append(temp)
+        temp = {}
+    return results
+
+def get_job(job, matches):
+    job = models.EmpDocMain.objects.get(Username=job)
     temp = {}
     temp["Username"] = job.Username
     temp["title"]= job.Title
@@ -347,4 +381,6 @@ def get_job(job):
         temp['applicants'] = apps
     temp['description'] = job.Description
     temp['name']=job.Username
+    temp['survey_match'] = matches[0]
+    temp['skills_match'] = matches[1]
     return temp

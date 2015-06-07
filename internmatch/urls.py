@@ -22,5 +22,4 @@ urlpatterns = [
     url(r'^', include(job_urls)),
     url(r'^', include(profile_urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('social_auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

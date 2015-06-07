@@ -7,7 +7,7 @@
 	<p>{{job.city}}, {{job.state}} {{job.zip}}</p>
 	<p>Start date: {{job.date}}</p>
 	<p>{% if job.paid %}Paid{% else %}Unpaid{% endif %} | {% if job.fulltime %}Full-time{%else%}Part-time{%endif%}{% if job.longterm %} | Long-term opportunity{% endif %}</p>
-	<form id="apply_form" action="/internmatch/student/apply/{{job.Username}}/" method="POST" enctype="multipart/form-data">
+	<form id="apply_form" action="/internmatch/student/apply/{{job.Username}}/{{job.survey_match}}/{{job.skills_match}}/" method="POST" enctype="multipart/form-data">
 	{% csrf_token %}
 		<div class="flex">
 		<div>
