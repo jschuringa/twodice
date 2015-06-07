@@ -37,9 +37,8 @@ def do_upload(file, kind, username):
     names = name.split(".")
     names[0] += datetime.now().strftime("_%Y-%m-%d_%H%M%S%f")
     name = names[0]+"."+names[1]
-    if not os.path.isdir("../user_uploads/" + username):
-        os.mkdir("../user_uploads/" + username)
-    with open("../user_uploads/" + username + "/" + name, 'wb+') as destination:
+    os.makedirs("/user_uploads/" + username, exist_ok=True)
+    with open("/user_uploads/" + username + "/" + name, 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
     f = models.StudentDocMain(Username=username, Doc=name, Type=kind)
@@ -64,7 +63,7 @@ def view(request):
 def download(request, username, name):
     typ = name.split(".")
     typ = typ[1]
-    response = HttpResponse(FileWrapper(open("../user_uploads/" + username +"/" + name, "rb")), content_type='application/' + typ)
+    response = HttpResponse(FileWrapper(open("/user_uploads/" + username +"/" + name, "rb")), content_type='application/' + typ)
     response['Content-Disposition'] = 'attachment; filename='+name
     return response
 
@@ -81,5 +80,5 @@ def delete(request, username, name):
     app.update(CoverLetter="")
     for a in app:
         a.save()
-    os.remove("../user_uploads/" + username + "/" + name)
+    os.remove("/user_uploads/" + username + "/" + name)
     return HttpResponseRedirect("/internmatch/student/view_docs/")

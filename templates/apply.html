@@ -2,7 +2,7 @@
 
 {% block content %}
 <div id="apply">
-	<h2>Apply for {{job.title}} | Work Culture Match: {{job.survey_match}}% | Skill Match: {{job.skills_match}}%</h2>
+	<h2>Apply for {{job.title}} | Work Culture Match: {{job.survey_match}}% | Skills Matched: {{job.skills_match}}</h2>
 	<a href="/internmatch/student/view_employer/{{job.EmpUsername}}"><h3>{{job.employer}}</h3></a>
 	<p>{{job.city}}, {{job.state}} {{job.zip}}</p>
 	<p>Start date: {{job.date}}</p>

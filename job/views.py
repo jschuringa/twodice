@@ -57,7 +57,7 @@ def apply(request, jobname, survey, skill):
     student["resumes"] = []
     student["cover_letters"] = []
     res = models.StudentDocMain.objects.filter(Username=username, Type="resume")
-    cls = models.StudentDocMain.objects.filter(Username=username, Type="cl")
+    cls = models.StudentDocMain.objects.filter(Username=username, Type="cover_letter")
     for r in res:
         student["resumes"].append(r.Doc)
     for c in cls:

@@ -87,6 +87,8 @@ def results(request, username):
         results.append(account)
 
     page = request.GET.get('page')
+    uskills = skillList.get_user_skills(username)
+    results = sorted(results, key= lambda k: ((k['skills_match']/len(uskills)/2)+k['survey_match']/100)/2, reverse=True)
     result_page = paginate.paginate(results, page)
     return render_to_response("view_applicants.html", {"results":result_page, "job":username, "name":name}, context_instance=RequestContext(request))
 
