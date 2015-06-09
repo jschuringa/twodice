@@ -1,7 +1,7 @@
 <div id="skills{% if read %}_locked{% else %}_draggable{% endif %}">
 	<div>
-	{% if not read %}<p>Choose skills from here:</p>{% endif %}
-		<ul id="baseList" class="{% if read %}locked{% else %}draggable{% endif %}">
+	{% if not read %}<p style="margin-left:7px">Choose skills from here:</p>{% endif %}
+		<ul id="baseList" class="{% if read %}locked{% else %}draggable flex{% endif %}">
 		    {% for skill in skills %}
 		    <li id="{{ forloop.counter }}">{{ skill }}</li>
 		    {% endfor %}
@@ -15,7 +15,7 @@
 	</div>
 	{% if not read %}
 	<div>
-		<p>Add skills here:</p>
+		<p style="margin-left:7px">Add skills here:</p>
 		<ul id="myList" class="{% if read %}locked{% else %}draggable{% endif %}"></ul>
 	</div>
 	{% endif %}

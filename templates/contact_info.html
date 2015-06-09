@@ -1,49 +1,49 @@
 {% block content %}
-<table>
 	<div id="contact_info">
 		<h2>Enter Your Contact Info</h2>
-		<form action="/internmatch/{{ type }}/contact_info/" method="post">{% csrf_token %}
+		<form class="readbox pad" action="/internmatch/{{ type }}/contact_info/" method="post">{% csrf_token %}
+			<table>
 			{% if type == "student" %}
 		    <tr>
-		    <td><label for="fname">First Name:</label>
-		    <td><input type="text" name="fname" value="{{fname}}" id="fname">
+		    <td><label for="fname">First Name:</label></td>
+		    <td><input type="text" name="fname" value="{{fname}}" id="fname"></td>
 		    </tr>
 		    <tr>
-		    <td><label for="lname">Last Name:</label>
-		    <td><input type="text" name="lname" value="{{lname}}" id="lname">
+		    <td><label for="lname">Last Name:</label></td>
+		    <td><input type="text" name="lname" value="{{lname}}" id="lname"></td>
 		    </tr>
 		    {% else %}
 		    <tr>
-		    <td><label for="name">Business Name:</label>
-		    <td><input type="text" name="name" value="{{name}}" id="name">
+		    <td><label for="name">Business Name:</label></td>
+		    <td><input type="text" name="name" value="{{name}}" id="name"></td>
 		    </tr>
-		    <td><label for="taxId">Federal Tax ID:</label>
-		    <td><input type="text" name="taxId" value="{{taxId}}" id="taxId">
+		    <td><label for="taxId">Federal Tax ID:</label></td>
+		    <td><input type="text" name="taxId" value="{{taxId}}" id="taxId"></td>
 		    </tr>
 		    {% endif %}
 		    <tr>
-		    <td><label for="email">Email:</label>
-		    <td><input type="email" name="email" value="{{email}}" id="email">
+		    <td><label for="email">Email:</label></td>
+		    <td><input type="email" name="email" value="{{email}}" id="email"></td>
 		    </tr>
 		    <tr>
-		    <td><label for="addr1">Address:</label>
-		    <td><input type="text" name="addr1" value="{{addr1}}" id="addr1">
+		    <td><label for="addr1">Address:</label></td>
+		    <td><input type="text" name="addr1" value="{{addr1}}" id="addr1"></td>
 		    </tr>
 		    <tr>
-			<td><label for="city">City:</label>
-		    <td><input type="text" name="city" value="{{city}}" id="city">
+			<td><label for="city">City:</label></td>
+		    <td><input type="text" name="city" value="{{city}}" id="city"></td>
 		    </tr>
 		    <tr>
-		    <td><label for="state">State:</label>
-		    <td><input type="text" name="state" value="{{state}}" id="state">
+		    <td><label for="state">State:</label></td>
+		    <td><input type="text" name="state" value="{{state}}" id="state"></td>
 		    </tr>
 		    <tr>
-		    <td><label for="zip">5-Digit Zip Code:</label>
-		    <td><input type="text" name="zip" value="{{zip}}" id="zip">
+		    <td><label for="zip">5-Digit Zip Code:</label></td>
+		    <td><input type="text" name="zip" value="{{zip}}" id="zip"></td>
 		    <tr>
-		    <td><input type="submit" value="Save" />
+		    <td><input type="submit" value="Save" /></td>
 			</tr>
+			</table>
 		</form>
 	</div>
-</table>
 {% endblock %}

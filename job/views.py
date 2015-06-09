@@ -6,7 +6,6 @@ Created on May 10, 2015
 from django.shortcuts import render_to_response
 import skills.views as skillList
 from survey import views as surveyList
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from database import models
 from datetime import date
 from django.http import HttpResponseRedirect
@@ -19,14 +18,19 @@ from database.models import EmployerMain
 from upload.views import do_upload
 from django.contrib.auth.decorators import login_required, user_passes_test
 from auth import permissions
+from search import search as matcher
+from pages import paginate
+from django.template import RequestContext
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
-def apply(request, jobname):
+def apply(request, jobname, survey, skill):
     x = {}
     x.update(csrf(request))
     username = request.user.get_username()
     if request.method == "POST":
+        if request.POST.get("cancel") == "Cancel":
+            return HttpResponseRedirect("/internmatch/student/intern_search/")
         res = ''
         cl = ''
         if request.FILES.get("resume"):
@@ -55,12 +59,12 @@ def apply(request, jobname):
     student["resumes"] = []
     student["cover_letters"] = []
     res = models.StudentDocMain.objects.filter(Username=username, Type="resume")
-    cls = models.StudentDocMain.objects.filter(Username=username, Type="cl")
+    cls = models.StudentDocMain.objects.filter(Username=username, Type="cover_letter")
     for r in res:
         student["resumes"].append(r.Doc)
     for c in cls:
         student["cover_letters"].append(c.Doc)
-    job = get_job(models.EmpDocMain.objects.get(Username=jobname))
+    job = get_job(jobname, [survey, skill])
     x["job"] = job
     x["student"] = student
     return render_to_response("apply.html", x)
@@ -96,8 +100,6 @@ def create(request, name):
         HttpResponseRedirect("/internmatch/employer/contact_info/")
     if not models.SurveyMain.objects.filter(Username=username):
         HttpResponseRedirect("/internmatch/employer/survey/")
-    if not emp.Verify:
-        HttpResponse(status=301)
     if name == "create_job" or not models.EmpDocMain.objects.filter(Username=name):
         first_time = True
         x['first']=True
@@ -177,12 +179,14 @@ def create(request, name):
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
-def view(request, name):
+def view(request, name, survey, skill):
     x = {}
     x.update(csrf(request))
     job = model_to_dict(models.EmpDocMain.objects.get(Username=name))
     job['survey'] = surveyList.get_user_survey(job['EmpUsername'])
     job['skills'] = skillList.get_user_skills(job['Username'])
+    job['survey_match'] = survey
+    job['skills_match'] = skill
     x['job'] = job
     e = models.EmployerMain.objects.get(Username=job['EmpUsername'])
     x['employer'] = e.Company
@@ -205,13 +209,16 @@ def search(request):
 def results(request, kind):
     x = {}
     x.update(csrf(request))
+    username = request.user.get_username()
     if kind == "view_postings":
         jobs = models.EmpDocMain.objects.filter(EmpUsername=request.user.get_username())
+        results = get_emp_jobs(jobs)
     elif kind == 'favorites':
         lst = models.StudFavoritesMain.objects.filter(StudUsername=request.user.get_username())
         jobs = []
         for job in lst:
-            jobs.append(models.EmpDocMain.objects.get(Username=job.JobUsername)) 
+            j = models.EmpDocMain.objects.get(Username=job.JobUsername)
+            jobs.append(j)
     elif kind == "search_results":
         if not request.GET.get("national"):
             if request.GET.get("home_zip") == "home_zip":
@@ -265,33 +272,43 @@ def results(request, kind):
         
     else:
         jobs = models.EmpDocMain.objects.all()
-    results = get_job_list(jobs)
+    if kind == 'favorites' or kind == 'search_results':
+        lst = []
+        emps = {}
+        jskills = {}
+        uskills = skillList.get_user_skills(username)
+        for j in jobs:
+            jname = j.Username
+            ename = j.EmpUsername
+            if j.EmpUsername not in emps:
+                emps[ename] = surveyList.get_survey_nums(ename)
+            temp = {jname:skillList.get_user_skills(jname)}
+            if ename in jskills:
+                jskills[ename].update(temp)
+            else:
+                jskills[ename] = temp
+        matches = matcher.startSearch(surveyList.get_survey_nums(username),
+                                    skillList.get_user_skills(username), emps, jskills)
+        results = get_job_list(matches)
+        results = sorted(results, key= lambda k: ((k['skills_match']/len(uskills)/2)+k['survey_match']/100)/2, reverse=True)        
     if kind == "favorites":
         for r in results:
             if models.StudFavoritesMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
                 r["favorite"] = True
             if models.ApplicationMain.objects.filter(JobUsername=r["Username"], StudUsername=request.user.get_username()):
                 r["applied"] = True
-    paginator = Paginator(results, 10)
     page = request.GET.get('page')
-    try:
-        result_page = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        result_page = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        result_page = paginator.page(paginator.num_pages)
-    x['results'] = result_page
+    x['results'] = paginate.paginate(results, page)
+   # x['all_results'] = results
     if kind == "search_results":
         x['type']="search"
-        return render_to_response("search_results.html", x)
+        return render_to_response("search_results.html", x, context_instance=RequestContext(request))
     elif kind == "favorites":
         x['type']="student"
-        return render_to_response("student_favorites.html", x)
+        return render_to_response("student_favorites.html", x, context_instance=RequestContext(request))
     else:
         x['type']="employer"
-        return render_to_response("view_postings.html", x)  
+        return render_to_response("view_postings.html", x, context_instance=RequestContext(request))  
 
 @login_required
 @user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
@@ -300,33 +317,34 @@ def single_results(request, username):
     x.update(csrf(request))
     jobs = models.EmpDocMain.objects.filter(EmpUsername=username)
     results = get_job_list(jobs)
-    paginator = Paginator(results, 10)
-
     page = request.GET.get('page')
-    try:
-        result_page = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        result_page = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        result_page = paginator.page(paginator.num_pages)
-    x['results'] = result_page
+    x['results'] = paginate.paginate(results, page)
     x['type']="view_employer"
     x["employer"]= username
-    return render_to_response("view_employer_postings.html", x)
+    return render_to_response("view_employer_postings.html", x, context_instance=RequestContext(request))
 
     
 def get_job_list(jobs):
     results = []
     temp = {}
     for j in jobs:
-        temp = get_job(j)
+        matches = jobs[j]
+        temp = get_job(j, matches)
         results.append(temp)
         temp = {}
     return results
 
-def get_job(job):
+def get_emp_jobs(jobs):
+    results = []
+    temp = {}
+    for j in jobs:
+        temp = get_job(j.Username, [0,0])
+        results.append(temp)
+        temp = {}
+    return results
+
+def get_job(job, matches):
+    job = models.EmpDocMain.objects.get(Username=job)
     temp = {}
     temp["Username"] = job.Username
     temp["title"]= job.Title
@@ -347,4 +365,9 @@ def get_job(job):
         temp['applicants'] = apps
     temp['description'] = job.Description
     temp['name']=job.Username
+    temp['survey_match'] = matches[0]
+    temp['skills_match'] = matches[1]
     return temp
+
+
+

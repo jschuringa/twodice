@@ -93,12 +93,6 @@ svg:not(:root) {
 figure {
   margin: 1em 40px;
 }
-hr {
-  height: 0;
-  -webkit-box-sizing: content-box;
-     -moz-box-sizing: content-box;
-          box-sizing: content-box;
-}
 pre {
   overflow: auto;
 }
@@ -1149,10 +1143,9 @@ img {
   border-radius: 50%;
 }
 hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 0;
-  border-top: 1px solid #eee;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
 }
 .sr-only {
   position: absolute;
@@ -1292,7 +1285,7 @@ h6,
   font-size: 12px;
 }
 p {
-  margin: 0 0 10px;
+  margin: 2px;
 }
 .lead {
   margin-bottom: 20px;
@@ -4866,7 +4859,7 @@ a.badge:focus {
   color: inherit;
 }
 .jumbotron p {
-  margin-bottom: 15px;
+  margin: 2px;
   font-size: 21px;
   font-weight: 200;
 }

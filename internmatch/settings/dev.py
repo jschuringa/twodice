@@ -40,6 +40,8 @@ INSTALLED_APPS = (
     'database',
     'requests',
     'emails',
+    'scheduled',
+    'pages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -71,6 +73,14 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+"django.core.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.request",
+)
+
 WSGI_APPLICATION = 'internmatch.wsgi.application'
 
 
@@ -83,6 +93,17 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, "..", 'database/db.sqlite3'),
     }
 }
+
+TWITTER_CONSUMER_KEY         = 'DSnRZgRMAJ1B5WPl09eA2UqbA '
+TWITTER_CONSUMER_SECRET      = 'IPDAPxDSRyZ0KvO9Ui3bcAha9bQII2vN0Cq8YKjZzYPf6M8SwM'
+FACEBOOK_APP_ID              = '1582991108636484'
+FACEBOOK_API_SECRET          = '2936f58c571c63ac0687c99c4744adce'
+LINKEDIN_CONSUMER_KEY        = ''
+LINKEDIN_CONSUMER_SECRET     = ''
+GOOGLE_CONSUMER_KEY          = ''
+GOOGLE_CONSUMER_SECRET       = ''
+GOOGLE_OAUTH2_CLIENT_ID      = '961695805820-dirguti8onqt1saupt741pju1inn240f.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET  = 'LN-nj5VrSoOTomJZARslt6-r'
 
 
 # Internationalization

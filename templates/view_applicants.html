@@ -1,12 +1,13 @@
 {% extends "employer_homepage.html" %}
 {% block content %}
+{% load page_tag %}
 <div id="view_applicants">
 	<div id="results">
 		<div class="pagination">
 		    <span class="step-links">
 		    		<a href="/internmatch/employer/view_postings/">Back to postings</a> | 
 		        {% if results.has_previous %}
-		            <a href="?page={{ results.previous_page_number }}">previous</a>
+		            <a href="?{% url_replace request 'page' results.previous_page_number %}">previous</a>
 		        {% endif %}
 		
 		        <span class="current">
@@ -14,7 +15,7 @@
 		        </span>
 		
 		        {% if results.has_next %}
-		            <a href="?page={{ results.next_page_number }}">next</a>
+		            <a href="?{% url_replace request 'page' results.next_page_number %}">next</a>
 		        {% endif %}
 		    </span>
 		</div>
@@ -36,7 +37,7 @@
 		    		<a href="/internmatch/employer/view_postings/">Back to postings</a> | 
 		        
 		        {% if results.has_previous %}
-		            <a href="?page={{ results.previous_page_number }}">previous</a>
+		            <a href="?{% url_replace request 'page' results.previous_page_number %}">previous</a>
 		        {% endif %}
 		
 		        <span class="current">
@@ -44,7 +45,7 @@
 		        </span>
 		
 		        {% if results.has_next %}
-		            <a href="?page={{ results.next_page_number }}">next</a>
+		            <a href="?{% url_replace request 'page' results.next_page_number %}">next</a>
 		        {% endif %}
 		    </span>
 		</div>

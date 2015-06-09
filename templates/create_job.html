@@ -2,47 +2,58 @@
 {% block content %}
 <div id="create_job">
 	<h2>{% if not first %}Edit {{title}}{%else%}Create an Internship{% endif %} Posting</h2>
-	<form name="job" id="job_form" class="flex">
+	<form name="job" id="job_form" class="readbox">
 		<div>
-			<label for="title">Position:</label>
-			<input type="text" name="title" id="title" value="{{title}}"/>
-			<br/>
-			<label for="date">Start Date:</label>
-			<input type="date" name="date" id="date" value="{{date|date:'Y-m-d'}}"/>
-			<br/>
-			<hr/>
+		<div>
+			<table class="pad">
+			<tr>
+			<td><label for="title">Position:</label></td>
+			<td><input type="text" name="title" id="title" value="{{title}}"/></td>
+			</tr>
+			<tr>
+			<td><label for="date">Start Date:</label></td>
+			<td><input type="date" name="date" id="date" value="{{date|date:'Y-m-d'}}"/></td>
+			</tr>
+			</table>
 			<p>Location:</p>
 			<input type="checkbox" name="hq" id="hq" value="hq" class="disable hq" checked>
 			<label for="hq">Use your main address</label>
 			<div id="location" class="disabled">
-				<label for="addr">Address:</label>
-			    <input type="text" name="addr" value="{{addr}}" id="addr" disabled>
-			    <br>
-				<label for="city">City:</label>
-			    <input type="text" name="city" value="{{city}}" id="city" disabled>
-			    <br>
-			    <label for="state">State:</label>
-			    <input type="text" name="state" value="{{state}}" id="state" disabled>
-			    <br>
-			    <label for="zip">5-Digit Zip Code:</label>
-			    <input type="text" name="zip" value="{{zip}}" id="zip" disabled>
-			    <br>
+				<table>
+				<tr>
+				<td><label for="addr">Address:</label></td>
+			    <td><input type="text" name="addr" value="{{addr}}" id="addr" disabled></td>
+			    </tr>
+			    <tr>
+				<td><label for="city">City:</label></td>
+			    <td><input type="text" name="city" value="{{city}}" id="city" disabled></td>
+			    </tr>
+			    <tr>
+			    <td><label for="state">State:</label></td>
+			    <td><input type="text" name="state" value="{{state}}" id="state" disabled></td>
+			    </tr>
+			    <tr>
+			    <td><label for="zip">5-Digit Zip Code:</label></td>
+			    <td><input type="text" name="zip" value="{{zip}}" id="zip" disabled></td>
+			    </tr>
+			</table>
 			</div>
-			<hr/>
-			<input type="radio" name="paid" id="paid" value="paid" checked/>
-			<label for="paid">Paid</label>
 			<br/>
-			<input type="radio" name="paid" id="unpaid" value="unpaid"/>
-			<label for="unpaid">Unpaid</label>
 			<br/>
-			<hr/>
-			<input type="radio" name="fulltime" id="fulltime" value="fulltime" checked/>
-			<label for="paid">Full-time</label>
-			<br/>
-			<input type="radio" name="fulltime" id="parttime" value="parttime"/>
-			<label for="unpaid">Part-time</label>
-			<br/>
-			<hr/>
+			<table>
+			<tr>
+			<td><input type="radio" name="paid" id="paid" value="paid" checked/></td>
+			<td><label for="paid">Paid</label></td>
+			<td><input type="radio" name="paid" id="unpaid" value="unpaid"/></td>
+			<td><label for="unpaid">Unpaid</label></td>
+			</tr>
+			<tr>
+			<td><input type="radio" name="fulltime" id="fulltime" value="fulltime" checked/></td>
+			<td><label for="paid">Full-time</label></td>
+			<td><input type="radio" name="fulltime" id="parttime" value="parttime"/></td>
+			<td><label for="unpaid">Part-time</label></td>
+			</tr>
+			</table>
 			<input type="checkbox" name="longterm" id="longterm" value="longterm"/>
 			<label for="longterm">Opportunity for long-term employment</label>
 			<br/>
@@ -50,7 +61,6 @@
 			<br/>
 			<textarea id="description" name="description" rows="6" cols="40">{{description}}</textarea>
 			<br/>
-			<input type="submit" name="job_submit" id="job_submit" value="{% if not first %}Update{% else %}Create{% endif %} Posting"/>
 		</div>
 		<div>
 			{% if not first %}
@@ -70,6 +80,8 @@
 				{% endblock %}
 			</div>
 		</div>
+		</div>
+		<input type="submit" name="job_submit" id="job_submit" value="{% if not first %}Update{% else %}Create{% endif %} Posting"/>
 	</form>
 </div>
 {% endblock %}

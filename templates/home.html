@@ -1,5 +1,84 @@
 {% extends "basic.html" %}
 
+{% block body_ext %}
+ <script>
+ 
+ function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+	        var cookies = document.cookie.split(';');
+	        for (var i = 0; i < cookies.length; i++) {
+	            var cookie = jQuery.trim(cookies[i]);
+	            // Does this cookie string begin with the name we want?
+	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
+	}
+//This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response, kind) {
+	  if (response.status === 'connected') {
+		  FB.api('/me', function(response) {
+			  var username =  response.id
+			  var pwd = "facebook";
+			  var csrftoken = getCookie('csrftoken');
+				$.ajaxSetup({
+			        beforeSend: function(xhr, settings) {
+			        	xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			        }
+				});
+			  if(kind){
+				  $.ajax({url:"/internmatch/fb_auth/", type:'POST', data:{"username":username, "password":pwd,
+					  														"password1":pwd, "password2":pwd, "type":kind,
+					  														"student":"Register", "fname":response.first_name, 
+					  														"lname":response.last_name, "email":response.email,
+					  														"social":true}, 
+						success:function(data, status, xhr) {
+							window.location.pathname = xhr.getResponseHeader("Location").replace(/.*?:\/\/.*?\//, "");
+						}
+					});
+			  }
+		  });
+	  }
+  }
+  
+//This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState(type) {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response, type);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1582991108636484',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.2' // use version 2.2
+  });
+  
+  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+
+	  };
+
+	  // Load the SDK asynchronously
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/en_US/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+  </script>
+{% endblock %}
 {% block content %}
 
 <h2> Welcome to Internmatch</h2>
@@ -7,8 +86,8 @@
 {% if form.errors %}
   <p class="error">Sorry, that's not a valid username or password</p>
 {% endif %}
+<form action="/internmatch/auth/" class="readbox pad" method="post">{% csrf_token %}
 <table>
-<form action="/internmatch/auth/" method="post">{% csrf_token %}
 	<tr><td><h3>Log in</h3></td></tr>
 	<tr>
 		<td><label for="username">User name:</label>
@@ -21,12 +100,19 @@
 	<tr>
 	<td><input type="submit" value="Login" />
 </tr>
+</table>
 </form>
- </table>
+ <p>Students can also log in with social media</p>
+ <fb:login-button scope="public_profile,email" onlogin="checkLoginState('exists');">
+</fb:login-button>
+
+<div id="status">
+</div>
+
  <div id="signUp" class="flex"> 
 	<div id="newStudent">
 		<h3>Create New Student Account</h3>
-		
+		<div class="readbox pad">
 		{% for field in formS %}
 		  {{field.error}}
 		
@@ -39,10 +125,14 @@
 		<input type="submit" name="student" value="Register" />
 		  
 		</form>
+		</div>
+		<p>Or create an account with social media</p>
+		 <fb:login-button scope="public_profile,email" onlogin="checkLoginState('student');">
+			</fb:login-button>
 	</div>
 	<div id="newEmployer">
 		<h3>Create New Business Account</h3>
-		
+		<div class="readbox pad">
 		{% for field in formE %}
 		  {{field.error}}
 		
@@ -56,6 +146,7 @@
 		<input type="submit" name="employer" value="Register" />
 		  
 		</form>
+		</div>
 	</div>
 </div>
 {% endblock %}
