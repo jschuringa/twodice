@@ -23,9 +23,12 @@ def upload(request):
     x.update(csrf(request))
     username = request.user.get_username()
     if request.method == "POST":
+        if models.StudentDocMain.objects.filter(Username=username).count() >= 10:
+            x['errmsg'] = "Upload Failed. You're at your document limit."
+            return render_to_response("student_doc_upload.html",x)
         if request.FILES.get("resume"):
             file = request.FILES['resume']
-            do_upload(file, "resume", username)
+            do_upload(file, "resume", username)       
         if request.FILES.get("cl"):
             file = request.FILES['cl']
             do_upload(file, "cover_letter", username)

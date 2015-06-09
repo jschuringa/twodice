@@ -30,6 +30,9 @@ def add_reference(request):
 	username = request.user.get_username()
 	if request.method == "POST":
 		s = models.StudentMain.objects.get(Username=username)
+		if models.StudReferenceMain.objects.filter(Username=username).count() >= 3:
+			x['errmsg'] = "We couldn't send the request. You've reached the limit on references"
+			return render_to_response("student_ref.html", x)
 		fname=request.POST.get("fname")
 		lname=request.POST.get("lname")
 		em=request.POST.get("email")
