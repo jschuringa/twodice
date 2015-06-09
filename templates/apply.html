@@ -7,9 +7,9 @@
 	<p>{{job.city}}, {{job.state}} {{job.zip}}</p>
 	<p>Start date: {{job.date}}</p>
 	<p>{% if job.paid %}Paid{% else %}Unpaid{% endif %} | {% if job.fulltime %}Full-time{%else%}Part-time{%endif%}{% if job.longterm %} | Long-term opportunity{% endif %}</p>
-	<form id="apply_form" action="/internmatch/student/apply/{{job.Username}}/{{job.survey_match}}/{{job.skills_match}}/" method="POST" enctype="multipart/form-data">
+	<form id="apply_form" class="readbox" action="/internmatch/student/apply/{{job.Username}}/{{job.survey_match}}/{{job.skills_match}}/" method="POST" enctype="multipart/form-data">
 	{% csrf_token %}
-		<div class="flex">
+		<div class="flex vert">
 		<div>
 			<label for="resume_list">Select resume:</label>
 			<select id="resume_list" name="resume_list" value="">
@@ -28,6 +28,7 @@
 				</div>
 			</fieldset>
 		</div>
+		<br>
 		<div>
 			<label for="cl_list">Select cover letter:</label>
 			<select id="cl_list" name="cl_list" value="">
@@ -47,6 +48,7 @@
 			</fieldset>
 			</div>
 		</div>
+			<br>
 			<div id="submitbutton">
 				<input id="button_apply" type="submit" value="Apply"/>
 				<input id="cancel" type="submit" value="Cancel"/>

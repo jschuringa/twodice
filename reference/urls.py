@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^internmatch/student/get_ref/$',  'reference.views.send_email'),
     url(r'^internmatch/reference/(.+)/accept/$',  'reference.views.accept'),
     url(r'^internmatch/reference/(.+)/decline/$',  'reference.views.decline'),
+    url(r'^internmatch/reference/(.+)/delete/$',  'reference.views.delete'),
     
 ]

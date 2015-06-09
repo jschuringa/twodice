@@ -198,7 +198,7 @@ $(document).ready(function(){
 	});
 });
 
-if(window.FileReader) { 
+/*if(window.FileReader) { 
 	  addEventHandler(window, 'load', function() {
 	    var drop = $('.filedrag');
 	  	
@@ -225,5 +225,5 @@ function addEventHandler(obj, evt, handler) {
         // Old school method.
         obj['on'+evt] = handler;
     }
-}
+}*/
 });

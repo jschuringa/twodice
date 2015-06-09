@@ -39,6 +39,7 @@ def add_reference(request):
 		r.save()
 		host = request.get_host()
 		email.sendEmail(r.Email, "Hi "+r.Fname+",\nThis is an email from TwoDice, a site where students can find internships. "+s.Fname+" "+s.Lname+" would like to use you as a reference. If that's ok please click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/accept/ If you don't want to be a reference click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/decline/ \nThanks for your help,\nTwoDice support", s.Fname + " " + s.Lname + " would like to use you as a reference on TwoDice")
+		return HttpResponseRedirect("/internmatch/student/view_ref/")
 	return render_to_response("student_ref.html", x)
 
 def accept(request, ref):
@@ -51,6 +52,11 @@ def decline(request, ref):
 	r = models.StudReferenceMain.objects.get(transactionref=ref)
 	r.delete()
 	return render_to_response("sorry_ref.html")
+
+def delete(request, ref):
+	r = models.StudReferenceMain.objects.get(transactionref=ref)
+	r.delete()
+	return render_to_response("/internmatch/student/view_ref")
 
 def view_references(request):
     x = {}

@@ -9,25 +9,19 @@
 		<p>Start date: {{job.start_date}}</p>
 		<p>{% if job.Pay == "paid" %}Paid{% else %}Unpaid{% endif %} | {% if job.Fulltime == "fulltime" %}Full-time{%else%}Part-time{%endif%}{% if job.Longterm == "longterm" %} | Long-term opportunity{% endif %}</p>
 		<div class="flex">
-			<table>
-			<div id="work">
-				<tr>
-				<td><h3>Work Culture Views:</h3></td>
-				<td style="padding-left:10px;"><h3>Skills:</h3></td>				
-			</tr>
-			<tr>
-				<td>{% include "survey.html" with attitudes=job.survey read=True %}</td>
-				<td>{% include "skills.html" with skills=job.skills read=True %}</td>
-			</tr>
-			<tr>
-				<td>{{job.survey_match}}% Match</td>
-				<td style="padding-left:10px;">{{job.skills_match}} Skills Matched</td>
-			</tr>
-
-		</table>
+			<div class="flex vert readbox" id="work">
+				<h3>Work Culture Views:</h3>
+				{% include "survey.html" with attitudes=job.survey read=True %}
+				<p>{{job.survey_match}}% Match</p>
+			</div>
+			<div class="flex vert readbox" id="skills">
+				<h3>Skills:</h3>			
+				{% include "skills.html" with skills=job.skills read=True %}</td>
+				<p>{{job.skills_match}} Skills Matched</p>
+			</div>
 		</div>
 		<h3>Description</h3>
-		<p>{{job.Description}}</p>
+		<p class="readbox">{{job.Description}}</p>
 		<a href="/internmatch/student/view_employer/{{job.EmpUsername}}"><input type="button" id="employer" value="View Employer Profile"/></a>
 		{% if applied %}
 			Already Applied

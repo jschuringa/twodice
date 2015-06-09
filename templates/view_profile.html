@@ -16,48 +16,55 @@
 		{%endif%}
 		
 		<div class="flex">
-			<div id="work">
+			<div class="readbox" id="work">
 				<h3>Work Culture Views:</h3>
 				{% include "survey.html" with attitudes=account.survey read=True %}
 				{% if not me %}
-					<h4>{{account.survey_match}}% Match</h4>
+					<p>{{account.survey_match}}% Match</p>
 				{%endif%}
 			</div>
 			{% if kind == "student" %}
-				<div>
+				<div class="readbox" id="skills">
 					<h3>Skills:</h3>
 					{% include "skills.html" with skills=account.skills read=True %}
 	
 					{% if not me %}
-						<h4>{{account.skills_match}} Skills Match</h4>
+						<p>{{account.skills_match}} Skills Match</p>
 					{%endif%}
 				</div>
-			<div id="references">
+			<div class="readbox" id="references">
 				<h3>References:</h3>
-				<table>
 				{% if not me %}
+				<table>
 				{% for r in refs %}
 					{% if r.Verify %}
-						<tr>
-							<td>Name:</td><td>{{r.Fname}} {{r.Lname}}</td>
-							<td>Relation:</td><td>{{r.Relation}}</td>
-							<td>Email:</td><td><a href="mailto:{{r.Email}}">{{r.Email}}</a></td>
-						</tr>
+					<tr><td class="readbox pad">
+					<table>
+						<tr><td><p>Name:</p></td><td colspan=3><p>{{r.Fname}} {{r.Lname}}</p></td>
+						<tr><td><b>Email:</b></td><td colspan=3><a href="mailto:{{r.Email}}">{{r.Email}}</a></td></tr>
+						<tr><td><b>Relation:</b></td><td>{{r.Relation}}</td></tr>
+					</table>
+					</td></tr>
 					{% endif %}
 				{% empty %}
-					<tr><td>No References</td></tr>
+					<p>No References</p>
 				{% endfor %}
 				</table>
 				{% else %}
+				<table>
 				{% for r in refs %}
-					<tr>
-						<td>Name:</td><td>{{r.Fname}} {{r.Lname}}</td>
-						<td>Relation:</td><td>{{r.Relation}}</td>
-						<td>Email:</td><td>{{r.Email}}</td>
-						<td>Verified:</td><td>{% if r.Verify %}Yes{% else %}No{% endif %}</td>
-					</tr>
+					<tr><td class="readbox pad">
+					<table id="{{ forloop.counter }}">
+					    <tr><td><p>Name:</p><td colspan=4><p>{{ r.Fname }} {{ r.Lname }}</p></td></tr>
+					    <tr><td><b>Email:</b></td><td colspan=4><a href="mailto:{{ r.Email}}">{{ r.Email}}</a></td></tr>
+					    <tr><td><b>Relation:</b></td><td>{{ r.Relation }}</td><td><b>Verified:</b></td>
+					    <td>{% if r.Verify %}Yes{% else %}No{% endif %}</td>
+					    <td><a href="/internmatch/student/{{r.transactionref}}/delete/"><input type="button" value="Remove"/></a></td>
+					    </tr>
+				    </table>
+				    </td></tr>
 				{% empty %}
-					<tr><td>No References</td></tr>
+					<p>No References. Click <a href="/internmatch/student/add_ref/">here</a> to add some</p>
 				{% endfor %}
 				</table>
 				{% endif %}

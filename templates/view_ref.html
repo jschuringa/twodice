@@ -2,15 +2,26 @@
 
 {% block content %}
 
-<h2>Your References</h2>	
+<h2>Your References</h2>
+<p>Note: Employers will not be able to see your references until they have been verified by email</p>
 
 <div id="references">
 	<div id="reference_list">
-		<ul id="reference_list">
+		<table>
 		    {% for reference in references %}
-		    <li id="{{ forloop.counter }}">{{ reference.Fname }} {{ reference.Lname }} -- <b>Email:</b> <u>{{ reference.Email}}</u></li>
+		    <tr><td class="readbox pad">
+		    <table id="{{ forloop.counter }}" >
+		    <tr><td><p>Name:</p></td><td colspan=4><p>{{ reference.Fname }} {{ reference.Lname }}</p></td></tr>
+		    <tr><td><b>Email:</b></td><td colspan=4><a href="mailto:{{ reference.Email}}">{{ reference.Email}}</a></td></tr>
+		    <tr><td><b>Relation:</b></td><td>{{ reference.Relation }}</td>
+		    <td><b>Verified:</b></td><td>{% if reference.Verify %}Yes{% else %}No{% endif %}</td>
+		    <td><a href="/internmatch/student/{{reference.transactionref}}/delete/"><input type="button" value="Remove"/></a></td></tr>
+		    </table>
+		    </td></tr>
+		    {% empty %}
+		    <p>No References. Click <a href="/internmatch/student/add_ref/">here</a> to add some</p>
 		    {% endfor %}
-		</ul>
+		</table>
 	</div>
 </div>
 

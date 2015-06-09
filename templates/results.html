@@ -20,7 +20,7 @@
 		    </span>
 		</div>
 		{% for result in results %}
-			<div class="result" style="background-color:#FFFFFF">
+			<div class="result">
 				<a href="{% if type != 'employer' %}/internmatch/student/view_job/{{result.name}}/{{result.survey_match}}/{{result.skills_match}}/{% else %}/internmatch/employer/edit_job/{{result.name}}/{% endif %}">
 					<h3>{{result.title}}{% if type != "employer" %}{% if type != "view_employer" %} | Work Culture Match: {{result.survey_match}}%{%endif%} | Skills Matched: {{result.skills_match}}{% endif %}</h3>
 					<h4>{% if type != "view_employer" and type != "employer" %}{{result.employer}}, {% endif %}{{result.city}}, {{result.state}}</h4>
@@ -30,7 +30,7 @@
 				</a>
 				{% if type == "employer" or type == 'student' %}<a href="/internmatch/{{type}}/delete/{{result.name}}/"><input type="button" class="delete" value="{%if type == 'student'%}Remove from list{%else%}Delete{%endif%}" id="{{result.name}}"/></a>{% endif %}
 				{% if result.applicants and type == "employer" %}<a href="/internmatch/employer/view_applicants/{{result.name}}"><input type="button" class="view" value="View Applicants"/></a>{% endif %}
-				{% if result.applied and type == "student" %}Already Applied{% elif type == "student" %}<a href="/internmatch/student/apply/{{result.name}}"><input type="button" class="apply" value="Apply"/></a>{% endif %}
+				{% if result.applied and type == "student" %}Already Applied{% elif type == "student" %}<a href="/internmatch/student/apply/{{result.name}}/{{result.survey_match}}/{{result.skills_match}}/"><input type="button" class="apply" value="Apply"/></a>{% endif %}
 			</div>
 		{% empty %}
 			{% if type == "search" %}

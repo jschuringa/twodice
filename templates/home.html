@@ -86,8 +86,8 @@
 {% if form.errors %}
   <p class="error">Sorry, that's not a valid username or password</p>
 {% endif %}
+<form action="/internmatch/auth/" class="readbox pad" method="post">{% csrf_token %}
 <table>
-<form action="/internmatch/auth/" method="post">{% csrf_token %}
 	<tr><td><h3>Log in</h3></td></tr>
 	<tr>
 		<td><label for="username">User name:</label>
@@ -100,8 +100,8 @@
 	<tr>
 	<td><input type="submit" value="Login" />
 </tr>
+</table>
 </form>
- </table>
  <p>Students can also log in with social media</p>
  <fb:login-button scope="public_profile,email" onlogin="checkLoginState('exists');">
 </fb:login-button>
@@ -112,7 +112,7 @@
  <div id="signUp" class="flex"> 
 	<div id="newStudent">
 		<h3>Create New Student Account</h3>
-		
+		<div class="readbox pad">
 		{% for field in formS %}
 		  {{field.error}}
 		
@@ -125,13 +125,14 @@
 		<input type="submit" name="student" value="Register" />
 		  
 		</form>
+		</div>
 		<p>Or create an account with social media</p>
 		 <fb:login-button scope="public_profile,email" onlogin="checkLoginState('student');">
 			</fb:login-button>
 	</div>
 	<div id="newEmployer">
 		<h3>Create New Business Account</h3>
-		
+		<div class="readbox pad">
 		{% for field in formE %}
 		  {{field.error}}
 		
@@ -145,6 +146,7 @@
 		<input type="submit" name="employer" value="Register" />
 		  
 		</form>
+		</div>
 	</div>
 </div>
 {% endblock %}

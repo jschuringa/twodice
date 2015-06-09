@@ -29,6 +29,8 @@ def apply(request, jobname, survey, skill):
     x.update(csrf(request))
     username = request.user.get_username()
     if request.method == "POST":
+        if request.POST.get("cancel") == "Cancel":
+            return HttpResponseRedirect("/internmatch/student/intern_search/")
         res = ''
         cl = ''
         if request.FILES.get("resume"):

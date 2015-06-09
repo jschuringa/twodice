@@ -20,16 +20,15 @@
 	<div id="page">
 	
 	<div id="header">
-		{% block header %}<h1>Two Dice</h1>{% endblock %}
+		{% block header %}
+		<img src="/static/images/logo.jpg"/>
+		<h1>Two Dice</h1>
+	    {% endblock %}
 	</div>
 	
-	<div id="frame" class="flex">
+	<div id="frame">
 	   
 	        {% block sidebar %}
-	        <ul>
-	            
-	            <li><a href="/admin/">Admin</a></li>
-	        </ul>
 	        {% endblock %}
 	    
 
@@ -57,7 +56,7 @@
 	</div>
 	
 	<div id="footer">
-		{% block footer%}&#xa9; Two Dice, 2015{% endblock %}
+		{% block footer%}&#xa9; Two Dice, 2015 <a href="/admin/">Admin</a>{% endblock %}
 	</div>
 
 
