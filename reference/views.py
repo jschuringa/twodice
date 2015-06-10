@@ -29,20 +29,23 @@ def add_reference(request):
 	x.update(csrf(request))
 	username = request.user.get_username()
 	if request.method == "POST":
-		s = models.StudentMain.objects.get(Username=username)
-		if models.StudReferenceMain.objects.filter(Username=username).count() >= 3:
-			x['errmsg'] = "We couldn't send the request. You've reached the limit on references"
-			return render_to_response("student_ref.html", x)
-		fname=request.POST.get("fname")
-		lname=request.POST.get("lname")
-		em=request.POST.get("email")
-		relation = request.POST.get("relation")
-		r = models.StudReferenceMain(Username=username, Fname=fname, Lname=lname, 
-									Relation=relation, Email=em, Verify=False)
-		r.save()
-		host = request.get_host()
-		email.sendEmail(r.Email, "Hi "+r.Fname+",\nThis is an email from TwoDice, a site where students can find internships. "+s.Fname+" "+s.Lname+" would like to use you as a reference. If that's ok please click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/accept/ If you don't want to be a reference click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/decline/ \nThanks for your help,\nTwoDice support", s.Fname + " " + s.Lname + " would like to use you as a reference on TwoDice")
-		return HttpResponseRedirect("/internmatch/student/view_ref/")
+                if request.POST.get("fname") == "" or request.POST.get("lname") == "" or request.POST.get("email") == "" or request.POST.get("relation") == "":
+                        x['errmsg'] = "Please fill all fields, no email has been sent."
+                else:
+                        s = models.StudentMain.objects.get(Username=username)
+                        if models.StudReferenceMain.objects.filter(Username=username).count() >= 3:
+                                x['errmsg'] = "We couldn't send the request. You've reached the limit on references"
+                                return render_to_response("student_ref.html", x)
+                        fname=request.POST.get("fname")
+                        lname=request.POST.get("lname")
+                        em=request.POST.get("email")
+                        relation = request.POST.get("relation")
+                        r = models.StudReferenceMain(Username=username, Fname=fname, Lname=lname, 
+                                                                                Relation=relation, Email=em, Verify=False)
+                        r.save()
+                        host = request.get_host()
+                        email.sendEmail(r.Email, "Hi "+r.Fname+",\nThis is an email from TwoDice, a site where students can find internships. "+s.Fname+" "+s.Lname+" would like to use you as a reference. If that's ok please click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/accept/ If you don't want to be a reference click this link http://" + host + "/internmatch/reference/" + str(r.transactionref) + "/decline/ \nThanks for your help,\nTwoDice support", s.Fname + " " + s.Lname + " would like to use you as a reference on TwoDice")
+                        return HttpResponseRedirect("/internmatch/student/view_ref/")
 	return render_to_response("student_ref.html", x)
 
 def accept(request, ref):

@@ -1,4 +1,20 @@
 {% block content %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+ $(function () {
+        $("#fname, #lname, #email, #addr1, #city, #state, #zip").bind("change keyup",
+  function () {      
+      if ($("#fname").val() != "" && $("#lname").val() != ""
+      	&& $("#email").val() != "" && $("#addr1").val() != "" && $("#city").val() != "" && $("#state").val() != "" && $("#zip").val()!= "")
+          $(this).closest("form").find(":submit").removeAttr("disabled");
+      else
+          $(this).closest("form").find(":submit").attr("disabled", "disabled");      
+      });
+        });
+</script>
+
 	<div id="contact_info">
 		<h2>Enter Your Contact Info</h2>
 		<form class="readbox pad" action="/internmatch/{{ type }}/contact_info/" method="post">{% csrf_token %}
@@ -39,9 +55,9 @@
 		    </tr>
 		    <tr>
 		    <td><label for="zip">5-Digit Zip Code:</label></td>
-		    <td><input type="text" name="zip" value="{{zip}}" id="zip"></td>
+		    <td><input type="number" name="zip" value="{{zip}}" id="zip"></td>
 		    <tr>
-		    <td><input type="submit" value="Save" /></td>
+		    <td><input type="submit" id ="submit" value="Save" disabled = "disabled" /></td>
 			</tr>
 			</table>
 		</form>
