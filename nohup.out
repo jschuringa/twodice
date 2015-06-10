@@ -428,3 +428,55 @@ June 09, 2015 - 04:48:11
 Django version 1.8, using settings 'internmatch.settings.dev'
 Starting development server at http://0.0.0.0:8000/
 Quit the server with CONTROL-C.
+[10/Jun/2015 02:06:10]"GET / HTTP/1.1" 200 6585
+[10/Jun/2015 02:06:10]"GET /static/css/styles.css HTTP/1.1" 200 4431
+[10/Jun/2015 02:06:10]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 200 90
+[10/Jun/2015 02:06:10]"GET /static/js/scripts.js HTTP/1.1" 200 6834
+[10/Jun/2015 02:06:11]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 200 35951
+[10/Jun/2015 02:06:11]"GET /static/images/logo.jpg HTTP/1.1" 200 4937
+[10/Jun/2015 02:06:11]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 117305
+[10/Jun/2015 02:06:13]"GET /favicon.ico HTTP/1.1" 404 9283
+[10/Jun/2015 02:06:13]"GET /favicon.ico HTTP/1.1" 404 9283
+[10/Jun/2015 02:06:13]"GET /favicon.ico HTTP/1.1" 404 9283
+[10/Jun/2015 02:06:13]"GET /favicon.ico HTTP/1.1" 404 9283
+[10/Jun/2015 02:06:36]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[10/Jun/2015 02:06:36]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7094
+[10/Jun/2015 02:06:58]"GET /internmatch/student/survey/ HTTP/1.1" 200 4715
+[10/Jun/2015 02:21:47]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[10/Jun/2015 02:21:47]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[10/Jun/2015 02:21:49]"GET /internmatch/ HTTP/1.1" 200 6585
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 10, 2015 - 02:00:11
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[10/Jun/2015 02:27:24]"GET /internmatch/ HTTP/1.1" 200 6585
+[10/Jun/2015 02:27:24]"GET /static/css/styles.css HTTP/1.1" 304 0
+[10/Jun/2015 02:27:24]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[10/Jun/2015 02:27:24]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[10/Jun/2015 02:27:24]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[10/Jun/2015 02:27:24]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[10/Jun/2015 02:27:24]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[10/Jun/2015 02:27:37]"POST / HTTP/1.1" 302 0
+[10/Jun/2015 02:27:49]"GET /internmatch/not_valid/ HTTP/1.1" 403 1207
+[10/Jun/2015 02:27:53]"GET /internmatch/ HTTP/1.1" 200 6585
+/root/django-user/twodice/venv/lib/python3.4/site-packages/django/db/models/fields/__init__.py:1414: RuntimeWarning: DateTimeField StudentMain.pub_date received a naive datetime (2015-06-10 00:00:00) while time zone support is active.
+  RuntimeWarning)
+
+[10/Jun/2015 02:28:28]"POST / HTTP/1.1" 302 0
+[10/Jun/2015 02:28:28]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5959
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 10, 2015 - 02:27:20
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[10/Jun/2015 02:30:24]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[10/Jun/2015 02:30:24]"GET /static/js/scripts.js HTTP/1.1" 200 6834
+[10/Jun/2015 02:30:26]"GET /internmatch/ HTTP/1.1" 200 6585
+/root/django-user/twodice/venv/lib/python3.4/site-packages/django/db/models/fields/__init__.py:1414: RuntimeWarning: DateTimeField StudentMain.pub_date received a naive datetime (2015-06-10 00:00:00) while time zone support is active.
+  RuntimeWarning)
+

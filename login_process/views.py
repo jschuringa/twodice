@@ -10,6 +10,7 @@ from datetime import date
 from django.contrib.auth.decorators import login_required
 from survey import views as surveyList
 from skills import views as skillList
+import re
 
 def account_created(request):
     return render_to_response("account_created.html")
@@ -29,31 +30,33 @@ def home(request):
         formS = UserCreationForm(request.POST)
         formE = UserCreationForm(request.POST)
         if request.POST.get("student") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
-            user = formS.save()
-            u = models.StudentMain(Username=user.username, pub_date=date.today())
-            new_user = auth.authenticate(username=request.POST['username'],
-                                    password=request.POST['password1'])
-            auth.login(request, new_user)
-            if request.POST.get("social"):
-                u.Fname = request.POST.get("fname")
-                u.Lname = request.POST.get("lname")
-                u.Email = request.POST.get("email")
-            u.save()
-            request.META.get('HTTP_UID')
-            Group.objects.get(name='student').user_set.add(user)
-            if request.POST.get("social"):
-                response = HttpResponse(HttpResponseRedirect("/internmatch/student/contact_info/"))
-                response['Location'] = '/internmatch/student/contact_info/'
-                return response
-            else:
-                return HttpResponseRedirect("/internmatch/student/contact_info/")
-        elif request.POST.get("student"):
-            if request.POST.get("social"):
-                response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
-                response['Location'] = "/internmatch/not_valid"
-                return response
-            else:
-                return HttpResponseRedirect("/internmatch/not_valid")
+            p = re.compile('[0-9a-zA-z@\.+-_]{6,30}')
+            if p.match(request.POST.get('username')) and p.match(request.POST.get('password1')):
+                user = formS.save()
+                u = models.StudentMain(Username=user.username, pub_date=date.today())
+                new_user = auth.authenticate(username=request.POST['username'],
+                                        password=request.POST['password1'])
+                auth.login(request, new_user)
+                if request.POST.get("social"):
+                    u.Fname = request.POST.get("fname")
+                    u.Lname = request.POST.get("lname")
+                    u.Email = request.POST.get("email")
+                u.save()
+                request.META.get('HTTP_UID')
+                Group.objects.get(name='student').user_set.add(user)
+                if request.POST.get("social"):
+                    response = HttpResponse(HttpResponseRedirect("/internmatch/student/contact_info/"))
+                    response['Location'] = '/internmatch/student/contact_info/'
+                    return response
+                else:
+                    return HttpResponseRedirect("/internmatch/student/contact_info/")
+            elif request.POST.get("student"):
+                if request.POST.get("social"):
+                    response = HttpResponse(HttpResponseRedirect("/internmatch/not_valid"))
+                    response['Location'] = "/internmatch/not_valid"
+                    return response
+                else:
+                    return HttpResponseRedirect("/internmatch/not_valid")
         if request.POST.get("employer") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
             user = formE.save()
             u = models.EmployerMain(Username=user.username, pub_date=date.today(), Verify=False)
