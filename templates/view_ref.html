@@ -15,7 +15,7 @@
 		    <tr><td><b>Email:</b></td><td colspan=4><a href="mailto:{{ reference.Email}}">{{ reference.Email}}</a></td></tr>
 		    <tr><td><b>Relation:</b></td><td>{{ reference.Relation }}</td>
 		    <td><b>Verified:</b></td><td>{% if reference.Verify %}Yes{% else %}No{% endif %}</td>
-		    <td><a href="/internmatch/student/{{reference.transactionref}}/delete/"><input type="button" value="Remove"/></a></td></tr>
+		    <td><a href="/internmatch/reference/{{reference.transactionref}}/delete/"><input type="button" value="Remove"/></a></td></tr>
 		    </table>
 		    </td></tr>
 		    {% empty %}

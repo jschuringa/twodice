@@ -62,7 +62,7 @@ def decline(request, ref):
 def delete(request, ref):
 	r = models.StudReferenceMain.objects.get(transactionref=ref)
 	r.delete()
-	return render_to_response("/internmatch/student/view_ref")
+	return HttpResponseRedirect("/internmatch/student/view_ref/")
 
 def view_references(request):
     x = {}
