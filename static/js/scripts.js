@@ -42,12 +42,13 @@ $(document).ready(function(){
 $(document).ready(function() {
     $( "#baseList, #myList" ).sortable({
       connectWith: ".draggable"
-    }).disableSelection();
+    });
+    $( "#baseList li, #myList li" ).disableSelection();
   });
 
 $(function() {
     $( ".sortable" ).sortable();
-    $( ".sortable" ).disableSelection();
+    $( ".sortable li" ).disableSelection();
   });
 
 $(document).ready(function(){
