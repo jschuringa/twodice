@@ -39,6 +39,8 @@ def view(request, kind, username, *job):
     else:
         account = get_profile_info("employer", username)
         x['account'] = account
+        x['account']['survey_match'] = search.cultureMatchSingle(surveyList.get_survey_nums(request.user.get_username()),
+                                                       surveyList.get_survey_nums(username))
         return render_to_response("view_employer.html", x)
     if kind == "view_student":
         return render_to_response("view_student.html", {"account":account})

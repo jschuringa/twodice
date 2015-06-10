@@ -22,4 +22,9 @@ urlpatterns = [
     url(r'^', include(job_urls)),
     url(r'^', include(profile_urls)),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^error/', 'error.views.error'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+handler404 = 'error.views.not_found'
+handler500 = 'error.views.error'
+handler403 = 'login_process.views.not_valid'
+handler400 = 'error.views.error'

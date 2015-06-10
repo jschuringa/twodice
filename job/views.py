@@ -21,9 +21,10 @@ from auth import permissions
 from search import search as matcher
 from pages import paginate
 from django.template import RequestContext
+from search.search import skillMatch
 
 @login_required
-@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.test_is_student, login_url='/error/')
 def apply(request, jobname, survey, skill):
     x = {}
     x.update(csrf(request))
@@ -57,6 +58,7 @@ def apply(request, jobname, survey, skill):
             f = models.StudFavoritesMain.objects.get(StudUsername=username, JobUsername=jobname)
             f.Applied = True
         f.save()
+        x['main_msg'] = "Application successful.Best of Luck!"
         return HttpResponseRedirect("/internmatch/student/favorites", x)
     student = {}
     student["resumes"] = []
@@ -73,7 +75,7 @@ def apply(request, jobname, survey, skill):
     return render_to_response("apply.html", x)
 
 @login_required
-@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.test_is_student, login_url='/error/')
 def save(request, username):
     if not models.StudFavoritesMain.objects.filter(StudUsername=request.user.get_username(), JobUsername=username):
         f = models.StudFavoritesMain(StudUsername=request.user.get_username(), JobUsername=username, Applied=False, pub_date=date.today())
@@ -81,18 +83,18 @@ def save(request, username):
     return HttpResponseRedirect("/internmatch/student/favorites")
 
 @login_required
-@user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.group_test, login_url='/error/')
 def delete(request, kind, username):
     if kind == 'student':
         models.StudFavoritesMain.objects.get(StudUsername=request.user.get_username(), JobUsername=username).delete()
-        return HttpResponseRedirect("/internmatch/student/favorites")
+        return HttpResponseRedirect("/internmatch/student/favorites", {"main_msg":"Internship removed"})
     else:
         models.StudFavoritesMain.objects.filter(JobUsername=username).delete()
         models.EmpDocMain.objects.get(Username=username, EmpUsername=request.user.get_username()).delete()
-        return HttpResponseRedirect("/internmatch/employer/view_postings/")
+        return HttpResponseRedirect("/internmatch/employer/view_postings/", {"main_msg":"Internship removed"})
 
 @login_required
-@user_passes_test(permissions.test_is_employer, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.test_is_employer, login_url='/error/')
 def create(request, name):
     x = {}
     x.update(csrf(request))
@@ -112,6 +114,9 @@ def create(request, name):
         x['first'] = False
     skills = skillList.get_skills()
     if request.method == "POST":
+        if not request.POST.get('title') or not request.POST.get("date") or not request.POST.get("description") or (not request.POST.get('hq') and (not request.POST.get("addr") or not request.POST.get("city") or not request.POST.get("state") or not request.POST.get("zip"))):
+            x['errmsg'] = "Could not create job. Please make sure all fields are filled in."
+            return render_to_response("create_job.html", x)
         if first_time:
             if request.POST.get("hq") == "hq":
                 addr = emp.Address
@@ -160,6 +165,7 @@ def create(request, name):
             skillList.set_skills(job.Username, request.POST.get("results"))
         response = HttpResponse(HttpResponseRedirect("/internmatch/employer/view_postings/", x))
         response['Location'] = "/internmatch/employer/view_postings/"
+        response["main_msg"] = "Internship posted."
         return response
     else:
         if not first_time:
@@ -181,7 +187,7 @@ def create(request, name):
         return render_to_response("create_job.html", x)
 
 @login_required
-@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.test_is_student, login_url='/error/')
 def view(request, name, survey, skill):
     x = {}
     x.update(csrf(request))
@@ -200,7 +206,7 @@ def view(request, name, survey, skill):
     return render_to_response("view_job.html", x)
 
 @login_required
-@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.test_is_student, login_url='/error/')
 def search(request):
     x = {}
     x.update(csrf(request))
@@ -208,7 +214,7 @@ def search(request):
     return render_to_response("intern_search.html", x)
 
 @login_required
-@user_passes_test(permissions.group_test, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.group_test, login_url='/error/')
 def results(request, kind):
     x = {}
     x.update(csrf(request))
@@ -314,16 +320,26 @@ def results(request, kind):
         return render_to_response("view_postings.html", x, context_instance=RequestContext(request))  
 
 @login_required
-@user_passes_test(permissions.test_is_student, login_url='/internmatch/not_valid/')
+@user_passes_test(permissions.test_is_student, login_url='/error/')
 def single_results(request, username):
     x = {}
     x.update(csrf(request))
     jobs = models.EmpDocMain.objects.filter(EmpUsername=username)
-    results = get_job_list(jobs)
+    student = request.user.get_username()
+    surv = matcher.cultureMatchSingle(surveyList.get_survey_nums(student), surveyList.get_survey_nums(username))
+    uskills = skillList.get_user_skills(student) 
+    results = []
+    js = get_emp_jobs(jobs)
+    for j in js:
+        j["survey_match"]=surv
+        j["skills_match"]=matcher.skillMatchSingle(uskills, skillList.get_user_skills(j["Username"]))
+        results.append(j)
+    results = sorted(results, key=lambda k: k['skills_match'])
     page = request.GET.get('page')
     x['results'] = paginate.paginate(results, page)
     x['type']="view_employer"
-    x["employer"]= username
+    e = {"username":username, "name":models.EmployerMain.objects.get(Username=username).Company, "survey_match":surv}
+    x["employer"]= e
     return render_to_response("view_employer_postings.html", x, context_instance=RequestContext(request))
 
     

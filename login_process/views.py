@@ -28,7 +28,7 @@ def home(request):
     if request.method == "POST":
         formS = UserCreationForm(request.POST)
         formE = UserCreationForm(request.POST)
-        if request.POST.get("student") and request.POST.get('password1') and request.POST.get('password2'):
+        if request.POST.get("student") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
             user = formS.save()
             u = models.StudentMain(Username=user.username, pub_date=date.today())
             new_user = auth.authenticate(username=request.POST['username'],
@@ -54,7 +54,7 @@ def home(request):
                 return response
             else:
                 return HttpResponseRedirect("/internmatch/not_valid")
-        if request.POST.get("employer") and request.POST.get('password1') and request.POST.get('password2'):
+        if request.POST.get("employer") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
             user = formE.save()
             u = models.EmployerMain(Username=user.username, pub_date=date.today(), Verify=False)
             new_user = auth.authenticate(username=request.POST['username'],
