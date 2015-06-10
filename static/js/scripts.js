@@ -39,16 +39,16 @@ $(document).ready(function(){
 	$("[id*=id_username]").css("margin-left", w - $("label[for*=id_username").width());
 })
 
-$(document).ready(function() {
-    $( "#baseList, #myList" ).sortable({
-      connectWith: ".draggable"
-    });
-    $( "#baseList li, #myList li" ).disableSelection();
-  });
+$( "#baseList, #myList" ).sortable({
+  connectWith: ".draggable"
+});
+$( "#baseList li, #myList li" ).disableSelection();
 
 
 $( ".sortable" ).sortable();
 $( ".sortable li" ).disableSelection();
+
+
 
 $("#surveySubmit").click(function(){
 	var list = $("#surveyList").children();
@@ -71,7 +71,7 @@ $("#surveySubmit").click(function(){
 	
 $("#skillSubmit").click(function(){
 	if($("#myList").children().length < 5 || $("#myList").children().length > 10){
-		$("#skillMsg").html("Please choose between five and ten skills");
+		$(".error").html("Cannot create job. Please choose between five and ten skills.");
 	}
 	else{
 		var list = $("#myList").children();
@@ -142,6 +142,7 @@ $("#job_submit").click(function(){
 			}
 		});
 	}
+	$(".error").html("Cannot create job. Please make sure form is filled out correctly");
 	return false;
 });
 

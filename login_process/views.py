@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
@@ -8,8 +7,9 @@ from django.http import HttpResponse
 from django.contrib.auth.models import Group
 from database import models
 from datetime import date
-from profiles import views as profile
 from django.contrib.auth.decorators import login_required
+from survey import views as surveyList
+from skills import views as skillList
 
 def account_created(request):
     return render_to_response("account_created.html")
@@ -135,7 +135,7 @@ def homepage(request, kind):
     x.update(csrf(request))
     account = {}
     username = request.user.get_username()
-    account.update(profile.get_profile_info(kind, username))
+    account.update(get_profile_info(kind, username))
     x['account'] = account
     if kind == 'student':
         x['refs'] = models.StudReferenceMain.objects.filter(Username=username)
@@ -186,4 +186,28 @@ def fb_auth(request):
         return auth_new(request)
     else:
         return home(request)
+    
+def get_profile_info(kind, username):
+    account = {}
+    if kind == "student":
+        user = models.StudentMain.objects.get(Username=username)
+        account['student']= username
+        account['fname'] = user.Fname
+        account['lname'] = user.Lname
+        try:
+            account['skills'] = skillList.get_user_skills(user.Username)
+        except:
+            account['skills'] = None
+    else:
+        user = models.EmployerMain.objects.get(Username=username)
+        account['name'] = user.Company
+        account['employer'] = username
+    try:
+        account['survey'] = surveyList.get_user_survey(user.Username)
+    except:
+        account['survey'] = None
+    account['email'] = user.Email
+    account['city'] = user.City
+    account['state'] = user.State
+    return account
         
