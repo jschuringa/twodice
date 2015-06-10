@@ -1,0 +1,6 @@
+{% extends kind|default:'basic.html' %}
+
+{% block content %}
+	<h2 class="error">The page you were trying to reach couldn't be found!</h2>
+	<p>Click <a href="/internmatch/{% if kind == 'student_homepage.html' %}student/homepage/{% elif kind == 'employer_homepage.html' %}employer/homepage/{%endif%}">here</a> to go home</p>
+{% endblock %}
