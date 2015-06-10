@@ -30,6 +30,9 @@ def home(request):
         formS = UserCreationForm(request.POST)
         formE = UserCreationForm(request.POST)
         if request.POST.get("student") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
+            if models.StudentMain.objects.filter(Username = request.POST.get("username")).exists():
+                return HttpResponseRedirect("/internmatch/not_valid")
+
             p = re.compile('[0-9a-zA-z@\.+-_]{6,30}')
             if p.match(request.POST.get('username')) and p.match(request.POST.get('password1')):
                 user = formS.save()
@@ -58,6 +61,8 @@ def home(request):
                 else:
                     return HttpResponseRedirect("/internmatch/not_valid")
         if request.POST.get("employer") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
+            if models.EmployerMain.objects.filter(Username = request.POST.get("username")).exists():
+                return HttpResponseRedirect("/internmatch/not_valid")
             user = formE.save()
             u = models.EmployerMain(Username=user.username, pub_date=date.today(), Verify=False)
             new_user = auth.authenticate(username=request.POST['username'],
