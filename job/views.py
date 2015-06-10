@@ -33,7 +33,7 @@ def apply(request, jobname, survey, skill):
             return HttpResponseRedirect("/internmatch/student/intern_search/")
         res = ''
         cl = ''
-        if request.FILES.get() and models.StudentDocMain.objects.filter(Username=username).count() >= 10:
+        if  models.StudentDocMain.objects.filter(Username=username).count() >= 10:
             x['errmsg'] = "Upload Failed. You're at your document limit."
             return render_to_response("student_doc_upload.html", x)
         if request.FILES.get("resume"):
