@@ -30,9 +30,6 @@ def home(request):
         formS = UserCreationForm(request.POST)
         formE = UserCreationForm(request.POST)
         if request.POST.get("student") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
-            if models.StudentMain.objects.filter(Username = request.POST.get("username")).exists():
-                return HttpResponseRedirect("/internmatch/not_valid")
-
             p = re.compile('[0-9a-zA-z@\.+-_]{6,30}')
             if p.match(request.POST.get('username')) and p.match(request.POST.get('password1')):
                 user = formS.save()
@@ -40,6 +37,7 @@ def home(request):
                 new_user = auth.authenticate(username=request.POST['username'],
                                         password=request.POST['password1'])
                 auth.login(request, new_user)
+                new_user.save()
                 if request.POST.get("social"):
                     u.Fname = request.POST.get("fname")
                     u.Lname = request.POST.get("lname")
@@ -61,8 +59,6 @@ def home(request):
                 else:
                     return HttpResponseRedirect("/internmatch/not_valid")
         if request.POST.get("employer") and request.POST.get('username') and request.POST.get('password1') and request.POST.get('password2') and request.POST.get('password2') and request.POST.get('password1') == request.POST.get('password2'):
-            if models.EmployerMain.objects.filter(Username = request.POST.get("username")).exists():
-                return HttpResponseRedirect("/internmatch/not_valid")
             user = formE.save()
             u = models.EmployerMain(Username=user.username, pub_date=date.today(), Verify=False)
             new_user = auth.authenticate(username=request.POST['username'],
@@ -84,18 +80,16 @@ def contact_info(request, kind):
     x = {}
     x.update(csrf(request))
     username=request.user.get_username()
-    first_time = False
-    soc_first_time = False
+    if request.user.groups.filter(name='contact').exists():
+        first_time = False
+    else:
+        first_time = True
     if kind == "student":
         u = models.StudentMain.objects.get(Username=username)
-        if not u.Fname:
-            first_time = True
         if not u.Address:
             soc_first_time = True
     else:
         u = models.EmployerMain.objects.get(Username=username)
-        if not u.Company:
-            first_time = True
     if request.method == 'POST':
         em = request.POST.get("email")
         ad = request.POST.get("addr1")
@@ -123,17 +117,17 @@ def contact_info(request, kind):
             return HttpResponseRedirect("/internmatch/" + kind + "/survey/")        
         else:
             return HttpResponseRedirect("/internmatch/" + kind + "/homepage/")
-    if not first_time:
-        temp = {}
-        if not soc_first_time:
-            temp = { "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+    temp = {}
+    if not first_time or soc_first_time:
         temp["email"] = u.Email
         if kind == "student":
             temp["fname"] = u.Fname
             temp["lname"] = u.Lname 
         else:
             temp["name"] = u.Company
-        x.update(temp)
+    if not first_time:
+        temp = { "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+    x.update(temp)
     return render_to_response(kind + "_contact_info.html", x)
 
 
