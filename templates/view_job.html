@@ -2,7 +2,7 @@
 
 {% block content %}
 	<div id="view_job">
-		<a href="/internmatch/student/search_results/">Back to search results</a> | <a href="/internmatch/student/intern_search/">New search</a>
+		<a href="/internmatch/student/intern_search/">New search</a>
 		<h2>{{job.Title}}</h2>
 		<a href="/internmatch/student/view_employer/{{job.EmpUsername}}"><h3>{{employer}}</h3></a>
 		<p>{{job.City}}, {{job.State}} {{job.Zip}}</p>
@@ -34,6 +34,6 @@
 			<a href="/internmatch/student/save/{{job.Username}}"><input type="button" id="save" value="Save Internship"/></a>
 		{% endif %}
 		<br>
-		<a href="/internmatch/student/search_results/">Back to search results</a> | <a href="/internmatch/student/intern_search/">New search</a>
+		<a href="/internmatch/student/intern_search/">New search</a>
 	</div>
 {% endblock %}
