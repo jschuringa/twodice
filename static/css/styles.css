@@ -16,6 +16,9 @@
 form > div{
 	display:inline-block;
 }
+.helptext{
+	max-width:350px;
+}
 @media screen and (min-width: 768px) {
   #header{
     padding-right: 60px;
