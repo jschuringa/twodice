@@ -15,7 +15,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 $(document).ready(function() {
     $("input:text").focus(function() { $(this).select(); } );
 });
@@ -37,18 +36,29 @@ $(document).ready(function(){
 	var w = $("label[for*=id_password2").width();
 	$("[id*=id_password1]").css("margin-left", w - $("label[for*=id_password1").width());
 	$("[id*=id_username]").css("margin-left", w - $("label[for*=id_username").width());
-})
-
-$( "#baseList, #myList" ).sortable({
-  connectWith: ".draggable"
 });
-$( "#baseList li, #myList li" ).disableSelection();
 
+$(".draggable, .sortable").find(function(){
+	$( "#baseList, #myList" ).sortable({
+	  connectWith: ".draggable"
+	});
+	$( "#baseList li, #myList li" ).disableSelection();
+	
+	
+	$( ".sortable" ).sortable();
+	$( ".sortable li" ).disableSelection();
+});
 
-$( ".sortable" ).sortable();
-$( ".sortable li" ).disableSelection();
-
-
+$("form").width(function(){
+	var max = 0;
+	$(this).children().each(function(){
+		var temp = $(this).outerWidth();
+		if (temp > max){
+			max = temp;
+		}
+	});
+	$(this).width(max);
+});
 
 $("#surveySubmit").click(function(){
 	var list = $("#surveyList").children();

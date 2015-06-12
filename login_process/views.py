@@ -80,6 +80,7 @@ def contact_info(request, kind):
     x = {}
     x.update(csrf(request))
     username=request.user.get_username()
+    soc_first_time = False
     if request.user.groups.filter(name='contact').exists():
         first_time = False
     else:
@@ -118,15 +119,15 @@ def contact_info(request, kind):
         else:
             return HttpResponseRedirect("/internmatch/" + kind + "/homepage/")
     temp = {}
-    if not first_time or soc_first_time:
+    if not first_time:
+        temp = { "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
+    if soc_first_time or not first_time:
         temp["email"] = u.Email
         if kind == "student":
             temp["fname"] = u.Fname
             temp["lname"] = u.Lname 
         else:
             temp["name"] = u.Company
-    if not first_time:
-        temp = { "addr1":u.Address, "city":u.City, "state":u.State, "zip":u.Zip}
     x.update(temp)
     return render_to_response(kind + "_contact_info.html", x)
 

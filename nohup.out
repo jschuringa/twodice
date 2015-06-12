@@ -1923,3 +1923,309 @@ June 11, 2015 - 16:58:43
 Django version 1.8, using settings 'internmatch.settings.dev'
 Starting development server at http://0.0.0.0:8000/
 Quit the server with CONTROL-C.
+[11/Jun/2015 16:59:54]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5988
+[11/Jun/2015 16:59:54]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 16:59:54]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 16:59:54]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 16:59:54]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 16:59:54]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 16:59:54]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 17:00:08]"POST /internmatch/student/contact_info/ HTTP/1.1" 302 0
+[11/Jun/2015 17:00:08]"GET /internmatch/student/survey/ HTTP/1.1" 200 4715
+[11/Jun/2015 17:00:21]"POST /internmatch/student/survey/ HTTP/1.1" 200 10
+[11/Jun/2015 17:00:21]"GET /internmatch/student/skills/ HTTP/1.1" 200 5465
+[11/Jun/2015 17:00:45]"POST /internmatch/student/skills/ HTTP/1.1" 200 10
+[11/Jun/2015 17:00:45]"POST /internmatch/student/skills/ HTTP/1.1" 200 10
+[11/Jun/2015 17:00:45]"GET /internmatch/student/homepage/ HTTP/1.1" 200 5558
+[11/Jun/2015 17:01:17]"GET /internmatch/student/intern_search/ HTTP/1.1" 200 6578
+[11/Jun/2015 17:14:18]"GET /internmatch/student/search_results/?keywords=&title=&employer=&national=national&date_start=&date_end=&paid=nopref&fulltime=nopref&submit=Search+for+Internships HTTP/1.1" 200 9393
+[11/Jun/2015 20:17:46]"GET / HTTP/1.1" 200 6585
+[11/Jun/2015 20:17:46]"GET /robots.txt HTTP/1.1" 404 9280
+[11/Jun/2015 20:58:56]"GET / HTTP/1.1" 200 6585
+[11/Jun/2015 20:58:56]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 20:58:56]"GET /favicon.ico HTTP/1.1" 404 9283
+[11/Jun/2015 20:58:56]"GET /favicon.ico HTTP/1.1" 404 9283
+[11/Jun/2015 20:58:56]"GET /favicon.ico HTTP/1.1" 404 9283
+[11/Jun/2015 20:58:56]"GET /favicon.ico HTTP/1.1" 404 9283
+[11/Jun/2015 20:59:16]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 20:59:16]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 20:59:36]"GET /internmatch/student/skills/ HTTP/1.1" 200 5465
+[11/Jun/2015 21:02:29]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:02:42]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:02:56]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 16:59:52
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:08:57]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:08:57]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:08:57]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:08:57]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:08:57]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:08:57]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:08:57]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:11:34]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:11:37]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:15:25]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:15:25]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:15:25]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:15:25]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:15:25]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:15:25]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:15:25]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:15:30]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:15:30]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:15:30]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:15:30]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:15:30]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:15:30]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:15:30]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:15:52]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:15:56]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 21:08:54
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:16:32]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:16:32]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:16:32]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:16:32]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:16:32]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:16:32]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:16:32]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:16:36]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:16:37]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:16:37]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:16:37]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:16:37]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:16:37]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:16:37]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:16:38]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:16:41]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:16:54]"GET /internmatch/student/intern_search/ HTTP/1.1" 200 6578
+[11/Jun/2015 21:16:56]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:18:11]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[11/Jun/2015 21:18:19]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:18:21]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 21:18:21]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:18:25]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:18:27]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[11/Jun/2015 21:18:28]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:18:37]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 21:18:37]"GET /internmatch/student/homepage/ HTTP/1.1" 200 5475
+[11/Jun/2015 21:18:41]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 21:16:31
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:20:20]"GET /internmatch/student/contact_info/ HTTP/1.1" 500 78066
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 21:20:19
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:21:20]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+[11/Jun/2015 21:21:20]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:21:20]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:21:20]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:21:20]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:21:20]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:21:20]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:21:23]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+[11/Jun/2015 21:21:23]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:21:23]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:21:23]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:21:23]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:21:23]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:21:23]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 21:21:11
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:22:54]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+[11/Jun/2015 21:22:54]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:22:54]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:22:54]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:22:54]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:22:54]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:22:54]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:23:02]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+[11/Jun/2015 21:23:02]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:02]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:02]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:23:02]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:02]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:23:02]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:23:10]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+[11/Jun/2015 21:23:10]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:10]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:10]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:10]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:23:10]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:23:10]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:23:24]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5985
+[11/Jun/2015 21:23:24]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:24]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:24]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:23:24]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:23:24]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:23:24]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:23:32]"GET / HTTP/1.1" 200 6585
+[11/Jun/2015 21:23:35]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 21:23:35]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:23:40]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 21:22:52
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:24:49]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:24:50]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:24:50]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:24:50]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:24:50]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:24:50]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:24:50]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:24:51]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 5986
+[11/Jun/2015 21:24:52]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:24:52]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:24:52]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:24:52]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:24:52]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:24:52]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 11, 2015 - 21:24:48
+Django version 1.8, using settings 'internmatch.settings.dev'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+[11/Jun/2015 21:25:53]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 6011
+[11/Jun/2015 21:25:53]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:25:53]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:25:53]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:25:53]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:25:53]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:25:53]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:38:52]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 6011
+[11/Jun/2015 21:38:52]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:38:52]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:38:52]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:38:52]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:38:52]"GET /static/js/scripts.js HTTP/1.1" 200 7021
+[11/Jun/2015 21:38:52]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:38:55]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 6011
+[11/Jun/2015 21:38:55]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:38:55]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:38:55]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:38:55]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:38:55]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:38:55]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:42:12]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 6011
+[11/Jun/2015 21:42:12]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:12]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:12]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:12]"GET /static/js/scripts.js HTTP/1.1" 200 7081
+[11/Jun/2015 21:42:12]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:42:12]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:42:15]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 6011
+[11/Jun/2015 21:42:15]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:15]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:42:15]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:42:15]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:15]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:15]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:42:51]"GET /internmatch/student/contact_info/ HTTP/1.1" 200 6011
+[11/Jun/2015 21:42:51]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:51]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:51]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:42:51]"GET /static/js/scripts.js HTTP/1.1" 200 7081
+[11/Jun/2015 21:42:51]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:42:51]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:42:58]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[11/Jun/2015 21:42:58]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:43:01]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:43:01]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:43:12]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 21:43:12]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:43:12]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:43:17]"GET /internmatch/student/skills/ HTTP/1.1" 200 5465
+[11/Jun/2015 21:43:17]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:43:19]"GET /internmatch/student/intern_search/ HTTP/1.1" 200 6578
+[11/Jun/2015 21:46:07]"GET /internmatch/student/intern_search/ HTTP/1.1" 200 6578
+[11/Jun/2015 21:46:07]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:07]"GET /static/css/styles.css HTTP/1.1" 200 4462
+[11/Jun/2015 21:46:07]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:07]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:46:07]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:46:07]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:46:16]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:46:16]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:21]"GET /internmatch/student/intern_search/ HTTP/1.1" 200 6578
+[11/Jun/2015 21:46:21]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:26]"GET /internmatch/student/add_ref/ HTTP/1.1" 200 4807
+[11/Jun/2015 21:46:26]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:31]"GET /internmatch/student/doc_upload/ HTTP/1.1" 200 4877
+[11/Jun/2015 21:46:31]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:46:41]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[11/Jun/2015 21:46:41]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:43]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:46:43]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:46:55]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 21:46:56]"GET /internmatch/employer/homepage/ HTTP/1.1" 200 3949
+[11/Jun/2015 21:46:56]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:46:56]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:47:04]"GET /internmatch/employer/create_job/ HTTP/1.1" 200 7043
+[11/Jun/2015 21:47:10]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:49:00]"GET /internmatch/employer/create_job/ HTTP/1.1" 200 7043
+[11/Jun/2015 21:49:00]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:49:00]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:49:00]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:49:00]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:49:00]"GET /static/css/styles.css HTTP/1.1" 200 4473
+[11/Jun/2015 21:49:00]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:49:03]"GET /internmatch/employer/create_job/ HTTP/1.1" 200 7043
+[11/Jun/2015 21:49:03]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:49:03]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:49:03]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:49:03]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:49:03]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:49:03]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:52:07]"GET /internmatch/employer/create_job/ HTTP/1.1" 200 7043
+[11/Jun/2015 21:52:07]"GET /static/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 0
+[11/Jun/2015 21:52:07]"GET /static/css/styles.css HTTP/1.1" 200 4477
+[11/Jun/2015 21:52:07]"GET /static/bootstrap/css/navbar.css HTTP/1.1" 304 0
+[11/Jun/2015 21:52:07]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:52:07]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
+[11/Jun/2015 21:52:07]"GET /static/images/logo.jpg HTTP/1.1" 304 0
+[11/Jun/2015 21:53:00]"GET /internmatch/log_out/ HTTP/1.1" 200 1189
+[11/Jun/2015 21:53:00]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:53:02]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:53:02]"GET /internmatch/ HTTP/1.1" 200 6585
+[11/Jun/2015 21:53:08]"POST /internmatch/auth/ HTTP/1.1" 302 4
+[11/Jun/2015 21:53:09]"GET /internmatch/student/homepage/ HTTP/1.1" 200 7100
+[11/Jun/2015 21:53:09]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:53:09]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:53:13]"GET /internmatch/student/favorites/ HTTP/1.1" 200 9391
+[11/Jun/2015 21:53:19]"GET /internmatch/student/apply/fomocoDeveloper2015-06-21/28/4/ HTTP/1.1" 200 6288
+[11/Jun/2015 21:53:19]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:54:15]"GET /internmatch/student/apply/fomocoDeveloper2015-06-21/28/4/ HTTP/1.1" 200 6288
+[11/Jun/2015 21:54:15]"GET /static/css/styles.css HTTP/1.1" 304 0
+[11/Jun/2015 21:54:15]"GET /static/js/scripts.js HTTP/1.1" 304 0
+[11/Jun/2015 21:54:15]"GET /static/bootstrap/js/bootstrap.min.js HTTP/1.1" 304 0
